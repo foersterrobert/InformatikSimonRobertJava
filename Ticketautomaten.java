@@ -1,11 +1,16 @@
 import javax.swing.*;
 
-public class Ticketautomaten
+public class Ticketautomaten extends JFrame
 {
     // instance variables - replace the example below with your own
     private Ticket[] tickets;
     private float bisherGezahlt;
     private float summe;
+
+    private JPanel jp = new JPanel();
+    //private JLabel 
+    private JTextField einwurf = new JTextField();
+    private JButton einzahlen_sichern = new JButton("Bestätigen");
 
     public Ticketautomaten()
     {
@@ -15,6 +20,9 @@ public class Ticketautomaten
         }
         bisherGezahlt = 0;
         summe = 0;
+
+        jp.add(einwurf);
+        jp.add(einzahlen_sichern);
     }
 
     public void printPreis()
