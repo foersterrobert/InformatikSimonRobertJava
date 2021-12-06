@@ -1,0 +1,13 @@
+#BlueJ class context
+comment0.target=Ticketautomaten
+comment1.params=
+comment1.target=Ticketautomaten()
+comment2.params=
+comment2.target=void\ printPreis()
+comment3.params=
+comment3.target=void\ printEingeworfen()
+comment4.params=betrag
+comment4.target=void\ GeldEinwerfen(float)
+comment5.params=
+comment5.target=void\ TicketDrucken()
+numComments=6
