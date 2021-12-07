@@ -23,6 +23,7 @@ public class Ticketautomaten extends JFrame
 
         jp.add(einwurf);
         jp.add(einzahlen_sichern);
+        add(jp);
     }
 
     public void printPreis()
@@ -59,5 +60,10 @@ public class Ticketautomaten extends JFrame
         System.out.println("");
         System.out.println("# " + bisherGezahlt + " cent wechselgeld");
         bisherGezahlt = 0;
+    }
+
+    public static void main(String[]arg){
+        Ticketautomaten ta = new Ticketautomaten();
+        System.out.println("Ticketpreis: ");
     }
 }

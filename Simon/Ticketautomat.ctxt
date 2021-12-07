@@ -1,0 +1,17 @@
+#BlueJ class context
+comment0.target=Ticketautomat
+comment0.text=\n\ Die\ Klasse\ nimmt\ die\ hat\ zwei\ Methoden.\ Mit\ der\ ersten\ Methode\ kann\ die\ Anzahl\ an\ Cent\ bestimmt\ werden\ die\ "eingeworfen"\ wurde.\ \n\ Mit\ der\ zweiten\ Methode\ kann\ ein\ Ticket\ gekauft\ werden,\ das\ 100\ Cent\ kostet.\n\ \n\ @author\ Simon\ Laschinger\n\ @version\ v1.0\n
+comment1.params=
+comment1.target=Ticketautomat()
+comment1.text=\n\ Konstruktor\ f\u00FCr\ Objekte\ der\ Klasse\ Ticketautomat\n
+comment2.params=e
+comment2.target=void\ actionPerformed(java.awt.event.ActionEvent)
+comment3.params=e
+comment3.target=void\ actionPerformed(java.awt.event.ActionEvent)
+comment4.params=e
+comment4.target=void\ actionPerformed(java.awt.event.ActionEvent)
+comment5.params=e
+comment5.target=void\ actionPerformed(java.awt.event.ActionEvent)
+comment6.params=arg
+comment6.target=void\ main(java.lang.String[])
+numComments=7
