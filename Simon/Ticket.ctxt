@@ -4,4 +4,6 @@ comment0.text=\n\ Beschreiben\ Sie\ hier\ die\ Klasse\ Ticket.\n\ \n\ @author\ S
 comment1.params=_ticketname\ _preis
 comment1.target=Ticket(java.lang.String,\ int)
 comment1.text=\n\ Konstruktor\ f\u00FCr\ Objekte\ der\ Klasse\ Ticket\n
-numComments=2
+comment2.params=e
+comment2.target=void\ actionPerformed(java.awt.event.ActionEvent)
+numComments=3

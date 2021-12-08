@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.event.*;
 
 /**
  * Beschreiben Sie hier die Klasse Ticket.
@@ -12,18 +13,36 @@ public class Ticket extends JPanel
     JPanel jp2 = new JPanel();
     public int preis;
     public String ticketname;
-    public JButton test;
+    static JButton ticketBtn;
+    
+    
     /**
      * Konstruktor für Objekte der Klasse Ticket
      */
-    public Ticket(String _ticketname, int _preis/*, JButton _test*/)
+    public Ticket(String _ticketname, int _preis)
     {
         preis = _preis;
         ticketname = _ticketname;
-        /*test = _test;*/
-        test = new JButton("Test");
-        add(test);
+        ticketBtn = new JButton(ticketname);
         
+        ticketBtn.setToolTipText("Ein "+ticketname+" kaufen!");
+        
+        ticketBtn.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                if (Ticketautomat.inGesamt >= preis){
+                    Ticketautomat.inGesamt -= preis;
+                    Ticketautomat.eingeworfen.setText((Ticketautomat.inGesamt/100) +" €");
+                    Ticketautomat.gekauft.setText("Einzelticket wird gedruckt…");
+                    Ticketautomat.gesamtesGeld += preis;
+                    Ticketautomat.gesGeldLabel.setText("Eingenommenes Geld: "+Ticketautomat.gesamtesGeld/100+" €");
+                } else {
+                    Ticketautomat.gekauft.setText("Bitte werfen Sie genügend Geld ein.");
+                }
+            }
+        });
+        
+        
+        
+        add(ticketBtn);
     }
-    
 }
