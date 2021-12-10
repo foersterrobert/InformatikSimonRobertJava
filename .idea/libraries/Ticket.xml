@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Ticket">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/Robert/Ticket.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

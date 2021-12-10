@@ -1,5 +1,9 @@
 import javax.swing.*;
 import java.awt.event.*;
+import java.awt.*;
+import javafx.scene.layout.*;
+import java.io.*;
+import java.util.Scanner;
 
 /**
  * Die Klasse nimmt die hat zwei Methoden. Mit der ersten Methode kann die Anzahl an Cent bestimmt werden die "eingeworfen" wurde. 
@@ -10,22 +14,25 @@ import java.awt.event.*;
  */
 public class Ticketautomat extends JFrame
 {
-    static int gesamtesGeld = 0;
+    static int gesamtesGeld;
+    static int fetchedGesamtesGeld;
     private Ticket gruppenticket;
     private Ticket einzelticket;
     static double inGesamt;
     public JPanel jp = new JPanel();
-    /*GroupLayout layout = new GroupLayout(0, 2);
-    jp.setlayout(layout);*/
 
     JTextField einwurf = new JTextField(30);
 
-    static JLabel gesGeldLabel = new JLabel("Eingenommenes Geld: 0 €");
+    static JLabel gesGeldLabel;
     JLabel centEingabe = new JLabel("Eingabe in Cent");
     static JLabel eingeworfen = new JLabel("0 €");
     static JLabel gekauft = new JLabel();
     JButton einwurf_sichern = new JButton("<html>"
                  + "<font color=#FF0000>Bestätigen</font>");
+    
+    
+    GridLayout layout = new GridLayout(0, 2);
+                 
 
     /**
      * Konstruktor für Objekte der Klasse Ticketautomat
@@ -35,12 +42,17 @@ public class Ticketautomat extends JFrame
         setTitle("Ticketautomat");
         setVisible(true);
         setSize(400, 400);
+        read();
+        gesamtesGeld = fetchedGesamtesGeld;
+        gesGeldLabel = new JLabel("Eingenommenes Geld: "+gesamtesGeld/100 +"€");
 
         gruppenticket = new Ticket("Gruppenticket", 500);
         einzelticket = new Ticket("Einzelticket", 100);
 
-        einwurf_sichern.setBounds(10, 10, 400, 25);
-        einwurf_sichern.setContentAreaFilled(false);
+        einwurf_sichern.setBorderPainted(false);
+        einwurf_sichern.setBackground(Color.black);
+        einwurf_sichern.setFocusPainted(false);
+        einwurf_sichern.setSize(10, 10);
 
         einwurf_sichern.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
@@ -71,10 +83,35 @@ public class Ticketautomat extends JFrame
         jp.add(gruppenticket);
         jp.add(gekauft);
         jp.add(gesGeldLabel);
+        
+        jp.setLayout(layout);
+        layout.setHgap(10);
+        layout.setVgap(10);
 
+    
         add(jp);
     }
 
+    public static void read() {
+         try {
+            File f = new File("gesamtesGeld.txt");
+            Scanner fScanner = new Scanner(f);
+            while (fScanner.hasNextLine()) {
+              String data = fScanner.nextLine();
+              fetchedGesamtesGeld = Integer.parseInt(data);
+            }
+            fScanner.close();
+         } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+         }
+    }
+    public static void write() throws IOException {
+      FileWriter f = new FileWriter("gesamtesGeld.txt");
+      f.write(gesamtesGeld+"");
+      f.close();
+      System.out.println("Successfully wrote to the file.");
+    }
 
     public static void main(String[]arg){
         Ticketautomat ta = new Ticketautomat();

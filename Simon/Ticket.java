@@ -14,6 +14,7 @@ public class Ticket extends JPanel
     public int preis;
     public String ticketname;
     static JButton ticketBtn;
+
     
     
     /**
@@ -23,7 +24,7 @@ public class Ticket extends JPanel
     {
         preis = _preis;
         ticketname = _ticketname;
-        ticketBtn = new JButton(ticketname);
+        ticketBtn = new JButton(ticketname+" "+preis/100+" €");
         
         ticketBtn.setToolTipText("Ein "+ticketname+" kaufen!");
         
@@ -32,9 +33,17 @@ public class Ticket extends JPanel
                 if (Ticketautomat.inGesamt >= preis){
                     Ticketautomat.inGesamt -= preis;
                     Ticketautomat.eingeworfen.setText((Ticketautomat.inGesamt/100) +" €");
-                    Ticketautomat.gekauft.setText("Einzelticket wird gedruckt…");
+                    Ticketautomat.gekauft.setText(ticketname+" wird gedruckt…");
                     Ticketautomat.gesamtesGeld += preis;
                     Ticketautomat.gesGeldLabel.setText("Eingenommenes Geld: "+Ticketautomat.gesamtesGeld/100+" €");
+                    try
+                    {
+                        Ticketautomat.write();
+                    }
+                    catch (java.io.IOException ioe)
+                    {
+                        ioe.printStackTrace();
+                    }
                 } else {
                     Ticketautomat.gekauft.setText("Bitte werfen Sie genügend Geld ein.");
                 }
