@@ -1,7 +1,6 @@
 import javax.swing.*;
 import java.awt.event.*;
 import java.awt.*;
-import javafx.scene.layout.*;
 import java.io.*;
 import java.util.Scanner;
 
@@ -110,10 +109,24 @@ public class Ticketautomat extends JFrame
       FileWriter f = new FileWriter("gesamtesGeld.txt");
       f.write(gesamtesGeld+"");
       f.close();
-      System.out.println("Successfully wrote to the file.");
     }
 
-    public static void main(String[]arg){
+    public static void main(String[]arg) throws UnsupportedLookAndFeelException, IllegalAccessException {
+        try
+        {
+            try
+            {
+                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            }
+            catch (InstantiationException ie)
+            {
+                ie.printStackTrace();
+            }
+        }
+        catch (ClassNotFoundException cnfe)
+        {
+            cnfe.printStackTrace();
+        }
         Ticketautomat ta = new Ticketautomat();
     }
 }
