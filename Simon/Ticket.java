@@ -32,7 +32,7 @@ public class Ticket extends JPanel
             public void actionPerformed(ActionEvent e){
                 if (Ticketautomat.inGesamt >= preis){
                     Ticketautomat.inGesamt -= preis;
-                    Ticketautomat.eingeworfen.setText((Ticketautomat.inGesamt/100) +" €");
+                    Ticketautomat.eingeworfen.setText("      "+(Ticketautomat.inGesamt/100) +" €");
                     Ticketautomat.gekauft.setText(ticketname+" wird gedruckt…");
                     Ticketautomat.gesamtesGeld += preis;
                     Ticketautomat.gesGeldLabel.setText("Eingenommenes Geld: "+Ticketautomat.gesamtesGeld/100+" €");

@@ -23,12 +23,11 @@ public class Ticketautomat extends JFrame
     JTextField einwurf = new JTextField(30);
 
     static JLabel gesGeldLabel;
-    JLabel centEingabe = new JLabel("Eingabe in Cent");
-    static JLabel eingeworfen = new JLabel("0 €");
+    JLabel centEingabe = new JLabel("      Eingabe in Cent");
+    static JLabel eingeworfen = new JLabel("      0 €");
     static JLabel gekauft = new JLabel();
     JButton einwurf_sichern = new JButton("<html>"
                  + "<font color=#FF0000>Bestätigen</font>");
-    
     
     GridLayout layout = new GridLayout(0, 2);
                  
@@ -58,7 +57,7 @@ public class Ticketautomat extends JFrame
                 String eingeworfenInput = einwurf.getText();
                 int eingeworfenInt = Integer.parseInt(eingeworfenInput);
                 inGesamt = inGesamt + eingeworfenInt;
-                eingeworfen.setText((inGesamt/100) +" €");
+                eingeworfen.setText("      "+(inGesamt/100) +" €");
                 einwurf.setText("");
             }
         });
@@ -68,7 +67,7 @@ public class Ticketautomat extends JFrame
                 String eingeworfenInput = einwurf.getText();
                 int eingeworfenInt = Integer.parseInt(eingeworfenInput);
                 inGesamt = inGesamt + eingeworfenInt;
-                eingeworfen.setText((inGesamt/100) +" €");
+                eingeworfen.setText("      "+(inGesamt/100) +" €");
                 einwurf.setText("");
             }
         });
