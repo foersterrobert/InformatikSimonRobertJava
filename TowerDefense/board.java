@@ -15,7 +15,6 @@ public class board extends JFrame implements MouseListener {
                 }
             }
         }
-        cells[0][0].color = Color.RED; 
         setSize(500, 525);
         add(panel);
         setVisible(true);
