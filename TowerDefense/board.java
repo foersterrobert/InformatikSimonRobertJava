@@ -6,15 +6,24 @@ public class board extends JFrame implements MouseListener {
     JPanel panel = new JPanel();
     cell[][] cells = new cell[10][10];
 
+    int[] cellspath1 = {2, 1};
+    int[] cellspath2 = {5, 3};
     public board() {
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
                 cells[i][j] = new cell(i, j, 50, 50);
-                if (i % 2 == 0) {
+
+                /*if (j % 2 == 0) {
                     cells[i][j].color = Color.CYAN;
-                }
+                }*/
             }
         }
+        for (int k = 0; k < cellspath1.length; k++){
+            for (int l = 0; l < cellspath1.length; l++){
+            cells[cellspath1[k]][cellspath2[l]].color = Color.CYAN;
+            }
+        }
+    
         setSize(500, 525);
         add(panel);
         setVisible(true);
