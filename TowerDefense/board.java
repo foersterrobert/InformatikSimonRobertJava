@@ -6,20 +6,18 @@ public class board extends JFrame implements MouseListener {
     JPanel panel = new JPanel();
     cell[][] cells = new cell[10][10];
 
-    int[] cellspath1 = {2, 1, 6};
-    int[] cellspath2 = {5, 3, 4};
+int[] cellspathColumn = {2, 2, 2, 3, 4, 4, 4, 3, 2, 2, 2, 2, 3, 4, 5, 6, 7, 7, 7};
+    
+int[] cellspathRow =    {0, 1, 2, 2, 2, 3, 4, 4, 4, 5, 6, 7, 7, 7, 7, 7, 7, 8, 9};
     public board() {
+        System.out.println(cellspathColumn.length);
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
                 cells[i][j] = new cell(i, j, 50, 50);
-
-                /*if (j % 2 == 0) {
-                    cells[i][j].color = Color.CYAN;
-                }*/
             }
         }
-        for (int k = 0; k < cellspath1.length; k++){
-            cells[cellspath1[k]][cellspath2[k]].color = Color.CYAN;
+        for (int k = 0; k < cellspathColumn.length; k++){
+            cells[cellspathColumn[k]][cellspathRow[k]].color = Color.CYAN;
         }
     
         setSize(500, 525);
@@ -37,6 +35,7 @@ public class board extends JFrame implements MouseListener {
                 if (x > i * 50 && x < (i + 1) * 50 && y > j * 50 + 25 && y < (j + 1) * 50 + 25) {
                     if (cells[i][j].color == Color.BLACK) {
                         cells[i][j].color = Color.RED;
+                        //System.out.println("1st: "+i+" 2nd: "+j);
                         cells[i][j].draw(panel.getGraphics());
                     }
                 }
