@@ -6,8 +6,8 @@ public class board extends JFrame implements MouseListener {
     JPanel panel = new JPanel();
     cell[][] cells = new cell[10][10];
 
-    int[] cellspath1 = {2, 1};
-    int[] cellspath2 = {5, 3};
+    int[] cellspath1 = {2, 1, 6};
+    int[] cellspath2 = {5, 3, 4};
     public board() {
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
@@ -19,9 +19,7 @@ public class board extends JFrame implements MouseListener {
             }
         }
         for (int k = 0; k < cellspath1.length; k++){
-            for (int l = 0; l < cellspath1.length; l++){
-            cells[cellspath1[k]][cellspath2[l]].color = Color.CYAN;
-            }
+            cells[cellspath1[k]][cellspath2[k]].color = Color.CYAN;
         }
     
         setSize(500, 525);
