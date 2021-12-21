@@ -17,7 +17,7 @@ public class cell {
     public void hover() {
         System.out.println("Hovering over cell" + x + "," + y);
     }
-
+    
     public void draw(Graphics g) {
         g.setColor(this.color);
         g.fillRect(x * width, y * height + 25, width, height);
