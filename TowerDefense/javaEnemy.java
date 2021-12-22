@@ -19,7 +19,7 @@ public class javaEnemy extends JPanel{
         cellspathRow = board.cellspathRow;
     }
 
-    /*/
+    /*
     public void draw(Graphics g){
         Toolkit tk = Toolkit.getDefaultToolkit();
         Image javaIcon = tk.getImage(javaIconPath);
@@ -36,6 +36,6 @@ public class javaEnemy extends JPanel{
                 System.out.println("Column: "+positionColumn+"  positionRow: "+positionRow);
                 g.fillRect(positionColumn, positionRow, 30, 30);
             }
-        }*/ // Stacked sich falsch
-    }
+        } 
+    }*/ // Stacked sich falsch
 }

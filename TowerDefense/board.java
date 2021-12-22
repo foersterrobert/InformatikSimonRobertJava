@@ -63,7 +63,7 @@ public class board extends JFrame implements MouseListener {
                 cells[i][j].draw(g);
             }
         }
-        jEnemy.draw(g);
+        // jEnemy.draw(g);
     }
     
 
