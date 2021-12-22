@@ -33,7 +33,7 @@ public class javaEnemy extends JPanel{
                 positionColumn++;
                 positionRow++;
                 System.out.println("Column: "+positionColumn+"  positionRow: "+positionRow);
-                g.fillRect(positionColumn, positionRow, 80, 80);
+                g.fillRect(positionColumn, positionRow, 30, 30);
             }
         }
     }
