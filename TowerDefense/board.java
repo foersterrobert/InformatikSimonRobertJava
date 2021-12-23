@@ -14,14 +14,11 @@ public class board extends JFrame implements MouseListener {
 
     public board() throws IOException, InterruptedException {
         // System.out.println(cellspathColumn.length);
-        for (int i = 0; i < 10; i++) {
-            for (int j = 0; j < 10; j++) {
-                cells[i][j] = new cell(i, j, UNIT_SIZE, UNIT_SIZE);
-            }
-        }
-        for (int k = 0; k < cellspathColumn.length; k++){
-            cells[cellspathColumn[k]][cellspathRow[k]].color = Color.CYAN;
-        }
+
+        boardGrid();
+        cellspath();
+        
+        
     
         jEnemy = new javaEnemy();
         this.add(jEnemy);
@@ -36,6 +33,20 @@ public class board extends JFrame implements MouseListener {
             repaint();
             Thread.sleep(2000);
         }*/
+    }
+
+    public void boardGrid(){
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 10; j++) {
+                cells[i][j] = new cell(i, j, UNIT_SIZE, UNIT_SIZE);
+            }
+        }
+    }
+
+    public void cellspath(){
+        for (int k = 0; k < cellspathColumn.length; k++){
+            cells[cellspathColumn[k]][cellspathRow[k]].color = Color.CYAN;
+        }
     }
 
 
@@ -63,7 +74,9 @@ public class board extends JFrame implements MouseListener {
                 cells[i][j].draw(g);
             }
         }
-        // jEnemy.draw(g);
+        boardGrid();
+        cellspath();
+        jEnemy.draw(g);
     }
     
 
