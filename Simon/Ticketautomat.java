@@ -126,6 +126,6 @@ public class Ticketautomat extends JFrame
         {
             cnfe.printStackTrace();
         }
-        Ticketautomat ta = new Ticketautomat();
+        new Ticketautomat();
     }
 }

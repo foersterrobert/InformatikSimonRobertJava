@@ -31,8 +31,13 @@ public class javaEnemy extends JPanel{
             positionRow = cellspathRow[i] * UNIT_SIZE;
             
             for (int j = 0; j < UNIT_SIZE; j++) {
-                positionColumn++;
-                positionRow++;
+                /*if (cellspathColumn[i] == cellspathColumn[i-1]){
+                    positionColumn++;
+                } else {
+                    positionRow++;
+                }*\/
+
+                
                 System.out.println("Column: "+positionColumn+"  positionRow: "+positionRow);
                 g.fillRect(positionColumn, positionRow, 30, 30);
             }
