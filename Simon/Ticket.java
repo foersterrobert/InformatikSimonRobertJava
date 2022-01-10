@@ -9,7 +9,6 @@ import java.awt.event.*;
  */
 public class Ticket extends JPanel
 {
-    JFrame f = new JFrame();
     JPanel jp2 = new JPanel();
     public int preis;
     public String ticketname;
@@ -34,6 +33,7 @@ public class Ticket extends JPanel
                     Ticketautomat.inGesamt -= preis;
                     Ticketautomat.eingeworfen.setText("      "+(Ticketautomat.inGesamt/100) +" €");
                     Ticketautomat.gekauft.setText(ticketname+" wird gedruckt…");
+                    ticketDrucken();
                     Ticketautomat.gesamtesGeld += preis;
                     Ticketautomat.gesGeldLabel.setText("Eingenommenes Geld: "+Ticketautomat.gesamtesGeld/100+" €");
                     try
@@ -53,5 +53,18 @@ public class Ticket extends JPanel
         
         
         add(ticketBtn);
+    }
+
+    public void ticketDrucken(){
+        JFrame tdFrame = new JFrame();
+        JPanel tdJP = new JPanel();
+        tdFrame.setVisible(true);
+        tdFrame.setSize(200, 200);
+        tdFrame.setTitle(ticketname);
+        JButton jbticketname = new JButton(ticketname);
+        JButton jbticketpreis = new JButton(""+preis);
+        tdJP.add(jbticketname);
+        tdJP.add(jbticketpreis);
+        tdFrame.add(tdJP);
     }
 }

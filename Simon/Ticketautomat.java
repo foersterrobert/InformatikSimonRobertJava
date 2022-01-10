@@ -55,20 +55,30 @@ public class Ticketautomat extends JFrame
         einwurf_sichern.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 String eingeworfenInput = einwurf.getText();
-                int eingeworfenInt = Integer.parseInt(eingeworfenInput);
-                inGesamt = inGesamt + eingeworfenInt;
-                eingeworfen.setText("      "+(inGesamt/100) +" €");
-                einwurf.setText("");
+                
+                if (eingeworfenInput.equals("Schluessel")){
+                    ticketHinzufügen();
+                } else {
+                    int eingeworfenInt = Integer.parseInt(eingeworfenInput);
+                    inGesamt = inGesamt + eingeworfenInt;
+                    eingeworfen.setText("      "+(inGesamt/100) +" €");
+                    einwurf.setText("");
+                }
             }
         });
         
         einwurf.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 String eingeworfenInput = einwurf.getText();
-                int eingeworfenInt = Integer.parseInt(eingeworfenInput);
-                inGesamt = inGesamt + eingeworfenInt;
-                eingeworfen.setText("      "+(inGesamt/100) +" €");
-                einwurf.setText("");
+                
+                if (eingeworfenInput.equals("Schluessel")){
+                    ticketHinzufügen();
+                } else {
+                    int eingeworfenInt = Integer.parseInt(eingeworfenInput);
+                    inGesamt = inGesamt + eingeworfenInt;
+                    eingeworfen.setText("      "+(inGesamt/100) +" €");
+                    einwurf.setText("");
+                }
             }
         });
         
@@ -89,6 +99,53 @@ public class Ticketautomat extends JFrame
     
         add(jp);
     }
+
+    public void ticketHinzufügen(){
+        JFrame paeFrame = new JFrame();
+        JPanel paeJP = new JPanel();
+        paeFrame.setVisible(true);
+        paeFrame.setSize(200, 200);
+        JLabel newTicketnameLabel = new JLabel("Ticketname");
+        JTextField newTicketname = new JTextField(30);
+        JLabel newTicketpreisLabel = new JLabel("Ticketpreis");
+        JTextField newTicketpreis = new JTextField(30);
+        JButton newTicketBestaetigen = new JButton("test");
+        paeJP.add(newTicketnameLabel);
+        paeJP.add(newTicketname);
+        paeJP.add(newTicketpreisLabel);
+        paeJP.add(newTicketpreis);
+        paeJP.add(newTicketBestaetigen);
+        paeFrame.add(paeJP);
+        newTicketBestaetigen.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                String ticketnameString = newTicketname.getText();
+                String ticketpreisString = newTicketpreis.getText();
+                int ticketpreisInt = Integer.parseInt(ticketpreisString);
+                int nummerNeuesTicket = 0;
+                Ticket[] hinzugefuegteTickets = new Ticket[10];
+
+                jp.remove(gekauft);
+                jp.remove(gesGeldLabel);
+
+                hinzugefuegteTickets[nummerNeuesTicket] = new Ticket(ticketnameString, ticketpreisInt);
+                jp.add(hinzugefuegteTickets[nummerNeuesTicket]);
+                jp.add(gekauft);
+                jp.add(gesGeldLabel);
+                repaint();
+                newTicketname.setText("");
+                newTicketpreis.setText("");
+
+                System.out.println("Test");
+                nummerNeuesTicket++;
+            }
+        });
+
+
+
+
+    }
+
+   
 
     public static void read() {
          try {
