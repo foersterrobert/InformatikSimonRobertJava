@@ -15,7 +15,7 @@ public class cell {
     }
 
     public void hover() {
-        System.out.println("Hovering over cell" + x + "," + y);
+        // System.out.println("Hovering over cell" + x + "," + y);
     }
     
     public void draw(Graphics g) {

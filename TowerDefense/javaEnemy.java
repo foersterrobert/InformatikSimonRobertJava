@@ -5,46 +5,53 @@ import javax.swing.*;
 
 public class javaEnemy extends JPanel{
     public static final int UNIT_SIZE = 50;
-    int[] cellspathColumn;
-    int[] cellspathRow;
-    int positionColumn = 500;
-    int positionRow = 500;
-
+    int[][] cellspathCords;
+    int positionIndex = 1;
+    int speed = 2;
+    int x;
+    int y;
     String javaIconPath = "assets/java_logo.png";
-
-
+    
     public javaEnemy() throws IOException{
-        System.out.println("Created javaEnemy");
-        cellspathColumn = board.cellspathColumn;
-        cellspathRow = board.cellspathRow;
+        cellspathCords = Board.cellspathCords;
+        x = cellspathCords[0][0] * UNIT_SIZE;
+        y = cellspathCords[0][1] * UNIT_SIZE + UNIT_SIZE/2;
     }
 
-    
+    public void move() {
+        if (x <= cellspathCords[positionIndex][0] * UNIT_SIZE) {
+            x+=speed;
+        }
+        
+        else {
+            x-=speed;
+        }
+        
+        if (y <= cellspathCords[positionIndex][1] * UNIT_SIZE + UNIT_SIZE/2) {
+            y+=speed;
+        }
+        
+        else {
+            y-=speed;
+        }
+        
+        if (
+            Math.abs(cellspathCords[positionIndex][0] * UNIT_SIZE - x) <= speed*2
+            && 
+            Math.abs(cellspathCords[positionIndex][1] * UNIT_SIZE + UNIT_SIZE/2 - y) <= speed*2
+        ) {
+                positionIndex++;
+        }
+    }
+
     public void draw(Graphics g){
         Toolkit tk = Toolkit.getDefaultToolkit();
         Image javaIcon = tk.getImage(javaIconPath);
-        g.drawImage(javaIcon, 200, 200, (ImageObserver) this);
-        g.setColor(Color.GREEN);
-        for (int i = 0; i < cellspathColumn.length; i++){
-            positionColumn = cellspathColumn[i] * UNIT_SIZE;
-            positionRow = cellspathRow[i] * UNIT_SIZE;
-            
-            for (int j = 0; j < UNIT_SIZE; j++) {
-                
-                /*if (cellspathColumn[i] == cellspathColumn[i-1]){
-                    positionColumn++;
-                } else {
-                    positionRow++;
-                }*/
-
-                
-                System.out.println("Column: "+positionColumn+"  positionRow: "+positionRow);
-                g.fillRect(positionColumn, positionRow+UNIT_SIZE/2, 30, 30);
-                
-                
-            }
-            
-        } 
+        g.drawImage(
+            javaIcon, 
+            x, 
+            y, 
+            (ImageObserver) this);
         g.dispose();
     }
 }
