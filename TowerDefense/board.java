@@ -29,10 +29,14 @@ public class board extends JFrame implements MouseListener {
         addMouseListener(this);
         setLocationRelativeTo(null);
 
-        /*while (true){
-            repaint();
-            Thread.sleep(2000);
-        }*/
+        
+        while (true){
+            int frameCount = 0;
+            if (frameCount % 60 == 0){
+                repaint();
+                frameCount++;
+            }
+        }
     }
 
     public void boardGrid(){

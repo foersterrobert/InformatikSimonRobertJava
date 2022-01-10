@@ -26,11 +26,11 @@ public class javaEnemy extends JPanel{
         g.drawImage(javaIcon, 200, 200, (ImageObserver) this);
         g.setColor(Color.GREEN);
         for (int i = 0; i < cellspathColumn.length; i++){
-            //g.fillRect(cellspathColumn[i] * UNIT_SIZE, cellspathRow[i] * UNIT_SIZE, 80, 80);
             positionColumn = cellspathColumn[i] * UNIT_SIZE;
             positionRow = cellspathRow[i] * UNIT_SIZE;
             
             for (int j = 0; j < UNIT_SIZE; j++) {
+                
                 /*if (cellspathColumn[i] == cellspathColumn[i-1]){
                     positionColumn++;
                 } else {
@@ -39,8 +39,13 @@ public class javaEnemy extends JPanel{
 
                 
                 System.out.println("Column: "+positionColumn+"  positionRow: "+positionRow);
-                g.fillRect(positionColumn, positionRow+25, 30, 30);
+                g.fillRect(positionColumn, positionRow+UNIT_SIZE/2, 30, 30);
+                
+                
             }
+            
         } 
-    } // Stacked sich falsch
+        g.dispose();
+    }
 }
+ 
