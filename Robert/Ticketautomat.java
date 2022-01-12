@@ -1,5 +1,6 @@
-import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
+import javax.swing.*;
 
 public class Ticketautomat
 {
@@ -17,11 +18,12 @@ public class Ticketautomat
 
         JFrame frame = new JFrame("Ticketautomat");
         JPanel container = new JPanel();
-        JLabel label = new JLabel("Ticketautomat");
+        JLabel title = new JLabel("Ticketautomat");
         JMenuBar menuBar = new JMenuBar();
         JMenu ticketMenu = new JMenu("Tickets");
-
         ImageIcon icon = new ImageIcon("icon.png");
+
+        GridLayout frameLayout = new GridLayout(3,3, 10, 10);
 
         JLabel bisherGezahltLabel = new JLabel("Bisher gezahlt: " + bisherGezahlt + "€");
         JLabel ticketLabel = new JLabel("Ticket: " + ticket.ticketName);
@@ -33,8 +35,7 @@ public class Ticketautomat
 
         JDialog settingsDialog = new JDialog();
         
-        einwerfenBtn.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e){
+        einwerfenBtn.addActionListener(l -> {
                 String inputSummeString = ticketInput.getText();
                 int inputSummeInt = Integer.parseInt(inputSummeString);
                 int wechselGeld = GeldEinwerfen(inputSummeInt);
@@ -43,17 +44,14 @@ public class Ticketautomat
                 if (wechselGeld >= 0) {
                     JOptionPane.showMessageDialog(frame, ticket.ticketName + " gedruckt. \n Wechselgeld: " + wechselGeld + "€", "Ticket gedruckt", JOptionPane.INFORMATION_MESSAGE);
                 }
-            }
-        });
+            });
 
-        settingsBtn.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e){
+        settingsBtn.addActionListener(l -> {
                 settingsDialog.setTitle("Einstellungen");
                 settingsDialog.setSize(300, 200);
                 settingsDialog.setLocationRelativeTo(frame);
                 settingsDialog.setVisible(true);
-            }
-        });
+            });
 
         zurueckgebenBtn.addActionListener(l -> {
             int wechselGeld = GeldZurueckgeben();
@@ -67,21 +65,28 @@ public class Ticketautomat
         frame.setTitle("Ticketautomat");
         frame.setIconImage(icon.getImage());
         frame.setSize(500, 600);
-
+        
         for (int i = 0; i < menuitems.length; i++) {
             ticketMenu.add(menuitems[i]);
+            int temp = i;
+            menuitems[i].addActionListener(l -> {
+                ticket = tickets[temp];
+                ticketLabel.setText("Ticket: " + ticket.ticketName);
+                ticketPreisLabel.setText("Ticketpreis: " + ticket.ticketPreis + "€");
+            });
         }
-
+        
         menuBar.add(ticketMenu);
-
-        container.add(label);
+        
+        container.setLayout(frameLayout);
+        container.add(title);
         container.add(menuBar);
-        container.add(bisherGezahltLabel);
+        container.add(settingsBtn);
         container.add(ticketLabel);
         container.add(ticketPreisLabel);
+        container.add(bisherGezahltLabel);
         container.add(ticketInput);
         container.add(einwerfenBtn);
-        container.add(settingsBtn);
         container.add(zurueckgebenBtn);
 
         settingsDialog.setIconImage(icon.getImage());
