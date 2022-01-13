@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="TA">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/Simon/TA.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>
