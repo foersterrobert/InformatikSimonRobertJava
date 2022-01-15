@@ -1,4 +1,7 @@
 import java.awt.*;
+import java.io.File;
+import java.io.PrintWriter;
+import java.util.Scanner;
 import javax.swing.*;
 
 public class Ticketautomat {
@@ -12,7 +15,7 @@ public class Ticketautomat {
 
     public Ticketautomat() {
         bisherGezahlt = 0.0f;
-        bisherEingenommen = 0.0f;
+        bisherEingenommen = read();
         ticket = tickets[0];
 
         JFrame frame = new JFrame("Ticketautomat");
@@ -71,12 +74,11 @@ public class Ticketautomat {
             }
         });
 
-        frame.setVisible(true);
         frame.setTitle("Ticketautomat");
         frame.setIconImage(icon.getImage());
         frame.setSize(380, 450);
         frame.setResizable(false);
-
+        
         for (int i = 0; i < menuitems.length; i++) {
             ticketMenu.add(menuitems[i]);
             int temp = i;
@@ -88,9 +90,8 @@ public class Ticketautomat {
         }
 
         menuBar.add(ticketMenu);
-
+        
         container.setLayout(null);
-
         container.add(title);
         container.add(menuBar);
         container.add(ticketLabel);
@@ -100,7 +101,7 @@ public class Ticketautomat {
         container.add(einwerfenBtn);
         container.add(zurueckgebenBtn);
         container.add(settingsBtn);
-
+        
         title.setBounds(10, 10, 200, 30);
         menuBar.setBounds(260, 10, 95, 30);
         ticketLabel.setBounds(15, 40, 200, 30);
@@ -110,27 +111,51 @@ public class Ticketautomat {
         einwerfenBtn.setBounds(255, 332, 91, 30);
         zurueckgebenBtn.setBounds(10, 370, 120, 30);
         settingsBtn.setBounds(135, 370, 200, 30);
-
-        settingsDialog.setIconImage(icon.getImage());
-        settingsDialog.setTitle("Einstellungen");
-
+        
         settingsContainer.add(bisherEingenommenLabel);
-
+        JLabel[] settingsTicketLabels = new JLabel[tickets.length];
+        JTextField[] settingsTicketInputs = new JTextField[tickets.length];
         for (int i = 0; i < tickets.length; i++) {
-            settingsContainer.add(new JLabel(tickets[i].ticketName));
-            settingsContainer.add(new JTextField(10));
+            JLabel settingsTicketLabel = new JLabel(tickets[i].ticketName);
+            JTextField settingsTicketInput = new JTextField(10);
+            settingsTicketInput.setText(String.valueOf(tickets[i].ticketPreis));
+            settingsTicketLabels[i] = settingsTicketLabel;
+            settingsTicketInputs[i] = settingsTicketInput;
+            settingsContainer.add(settingsTicketLabels[i]);
+            settingsContainer.add(settingsTicketInputs[i]);
         }
-
+        JButton settingsSaveBtn = new JButton("Speichern");
+        settingsSaveBtn.addActionListener(l -> {
+            try {
+                for (int i = 0; i < tickets.length; i++) {
+                    tickets[i].ticketPreis = Float.parseFloat(settingsTicketInputs[i].getText());
+                }
+                ticketPreisLabel.setText("Preis: " + ticket.ticketPreis + "€");
+                settingsDialog.setVisible(false);
+            }
+            catch (Exception e) {
+                JOptionPane.showMessageDialog(frame, "Bitte geben Sie nur Zahlen ein!", "Fehler",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+        });
+        settingsContainer.add(settingsSaveBtn);
+        
+        settingsDialog.setTitle("Einstellungen");
+        settingsDialog.setIconImage(icon.getImage());
+        settingsDialog.setResizable(false);
         settingsDialog.add(settingsContainer);
-
+        
         frame.add(container);
-    }
 
+        frame.setVisible(true);
+    }
+    
     public float GeldEinwerfen(float betrag) {
         bisherGezahlt += betrag;
         if (bisherGezahlt >= ticket.ticketPreis) {
             bisherGezahlt -= ticket.ticketPreis;
             bisherEingenommen += ticket.ticketPreis;
+            write(bisherEingenommen);
             return GeldZurueckgeben();
         }
         return -1;
@@ -140,5 +165,31 @@ public class Ticketautomat {
         float wechselgeld = bisherGezahlt;
         bisherGezahlt = 0;
         return wechselgeld;
+    }
+
+    public float read() {
+        try {
+            File eingenommenFile = new File("eingenommen.txt");
+            Scanner eingenommenScanner = new Scanner(eingenommenFile);
+            String eingenommenText = eingenommenScanner.nextLine();
+            float eingenommen = Float.parseFloat(eingenommenText);
+            eingenommenScanner.close();
+            return eingenommen;
+        }
+        catch (Exception e) {
+            return 0f;
+        }
+    }
+
+    public void write(float eingenommen) {
+        try {
+            File eingenommenFile = new File("eingenommen.txt");
+            PrintWriter eingenommenWriter = new PrintWriter(eingenommenFile);
+            eingenommenWriter.println(eingenommen);
+            eingenommenWriter.close();
+        }
+        catch (Exception e) {
+            System.out.println("Fehler beim Schreiben der Datei");
+        }
     }
 }
