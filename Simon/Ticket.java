@@ -27,12 +27,12 @@ public class Ticket extends JPanel
         
         ticketBtn.setToolTipText("Ein "+ticketname+" kaufen!");
         
+        // Ein Actionlistener, der dann aufgerufen wird, wenn auf ein Ticket gedrückt wird.
         ticketBtn.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 if (Ticketautomat.inGesamt >= preis){
                     Ticketautomat.inGesamt -= preis;
                     Ticketautomat.eingeworfen.setText("      "+(Ticketautomat.inGesamt/100) +" €");
-                    Ticketautomat.gekauft.setText(ticketname+" wird gedruckt…");
                     ticketDrucken();
                     Ticketautomat.gesamtesGeld += preis;
                     Ticketautomat.gesGeldLabel.setText("Eingenommenes Geld: "+Ticketautomat.gesamtesGeld/100+" €");
@@ -55,16 +55,21 @@ public class Ticket extends JPanel
         add(ticketBtn);
     }
 
+    // Eine Methode, die dem Käufer das Ticket "ausdruckt"/zeigt.
     public void ticketDrucken(){
         JFrame tdFrame = new JFrame();
         JPanel tdJP = new JPanel();
+
         tdFrame.setVisible(true);
         tdFrame.setSize(200, 200);
         tdFrame.setTitle(ticketname);
+
         JButton jbticketname = new JButton(ticketname);
-        JButton jbticketpreis = new JButton(""+preis);
+        JButton jbticketpreis = new JButton(""+preis/100+" €");
+
         tdJP.add(jbticketname);
         tdJP.add(jbticketpreis);
+        
         tdFrame.add(tdJP);
     }
 }
