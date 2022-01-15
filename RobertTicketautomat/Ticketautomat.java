@@ -36,16 +36,22 @@ public class Ticketautomat {
         JPanel settingsContainer = new JPanel();
 
         einwerfenBtn.addActionListener(l -> {
-            String inputSummeString = ticketInput.getText();
-            float inputSummeFloat = Float.parseFloat(inputSummeString);
-            float wechselGeld = GeldEinwerfen(inputSummeFloat);
-            ticketInput.setText("");
-            bisherGezahltLabel.setText("Bisher gezahlt: " + bisherGezahlt + "€");
-            bisherEingenommenLabel.setText("Durch Tickets eingenommen: " + bisherEingenommen + "€");
-            if (wechselGeld >= 0) {
-                JOptionPane.showMessageDialog(frame,
-                        ticket.ticketName + " gedruckt. \n Wechselgeld: " + wechselGeld + "€", "Ticket gedruckt",
-                        JOptionPane.INFORMATION_MESSAGE);
+            try {
+                String inputSummeString = ticketInput.getText();
+                float inputSummeFloat = Float.parseFloat(inputSummeString);
+                float wechselGeld = GeldEinwerfen(inputSummeFloat);
+                ticketInput.setText("");
+                bisherGezahltLabel.setText("Bisher gezahlt: " + bisherGezahlt + "€");
+                bisherEingenommenLabel.setText("Durch Tickets eingenommen: " + bisherEingenommen + "€");
+                if (wechselGeld >= 0) {
+                    JOptionPane.showMessageDialog(frame,
+                            ticket.ticketName + " gedruckt. \n Wechselgeld: " + wechselGeld + "€", "Ticket gedruckt",
+                            JOptionPane.INFORMATION_MESSAGE);
+                }
+            } 
+            catch (Exception e) {
+                JOptionPane.showMessageDialog(frame, "Bitte werfen Sie nur Münzen ein! :)", "Fehler",
+                        JOptionPane.ERROR_MESSAGE);
             }
         });
 
