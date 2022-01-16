@@ -1,13 +1,21 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Scanner;
 
 import java.awt.Color;
 import java.awt.GridLayout;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -42,6 +50,10 @@ public class Ticketautomat extends JFrame
 
     Ticket[] hinzugefuegteTickets = new Ticket[100];
     int nummerNeuesTicket = 2;
+
+    static Calendar cal = Calendar.getInstance();
+    static JButton datumAuswaehlen;
+    
                  
 
     /**
@@ -64,6 +76,18 @@ public class Ticketautomat extends JFrame
         einwurf_sichern.setBackground(Color.GRAY);
         einwurf_sichern.setFocusPainted(false);
         einwurf_sichern.setSize(10, 10);
+
+        DateFormat df = new SimpleDateFormat("EEE, d.M.yyyy");
+        Date date = cal.getTime();
+        String dateForButton = df.format(date);
+        datumAuswaehlen = new JButton(dateForButton);
+
+        datumAuswaehlen.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                new MainFrame();
+            }
+        });
+        
 
         
         // Ein Actionlistener, der dann aufgerufen wird, wenn der Button:"Bestätigen" gedrückt wird.
@@ -107,7 +131,8 @@ public class Ticketautomat extends JFrame
         jp.add(hinzugefuegteTickets[0]);
         jp.add(hinzugefuegteTickets[1]);
         jp.add(gekauft);
-        
+        jp.add(datumAuswaehlen);
+
         jp.setLayout(layout);
         layout.setHgap(10);
         layout.setVgap(10);
@@ -157,13 +182,13 @@ public class Ticketautomat extends JFrame
                 }
 
                 jp.remove(gekauft);
-                jp.remove(gesGeldLabel);
+                jp.remove(datumAuswaehlen);
 
                 hinzugefuegteTickets[nummerNeuesTicket] = new Ticket(ticketnameString, ticketpreisInt);
 
                 jp.add(hinzugefuegteTickets[nummerNeuesTicket]);
                 jp.add(gekauft);
-                jp.add(gesGeldLabel);
+                jp.add(datumAuswaehlen);
 
                 repaint(); 
                 
