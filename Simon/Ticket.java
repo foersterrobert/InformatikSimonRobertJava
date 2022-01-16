@@ -47,7 +47,6 @@ public class Ticket extends JPanel {
                     ticketDrucken();
                     Ticketautomat.gesamtesGeld += preis;
                     Ticketautomat.gesamtesGeldTag = Ticketautomat.gesamtesGeld / 100;
-                    System.out.println(Ticketautomat.gesamtesGeldTag);
                     Ticketautomat.gesGeldLabel.setText("Eingenommenes Geld: "+ String.format("%,.2f", Ticketautomat.gesamtesGeldTag) +"€");
                     try {
                         Ticketautomat.write();
