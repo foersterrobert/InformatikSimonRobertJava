@@ -20,6 +20,8 @@ public class YearView extends JPanel {
         JButton[] switches = new JButton[2];
         JLabel currentYear;
 
+        JLabel labelDesc = new JLabel("Wählen Sie einen Tag aus, für den Sie ein Ticket kaufen möchten!");
+        JPanel panelDesc = new JPanel();
         JPanel panelYearSwitch = new JPanel();
         JPanel panelMonths = new JPanel();
         int chosenYear;
@@ -29,6 +31,9 @@ public class YearView extends JPanel {
 
     public YearView() {
 
+        panelDesc.add(labelDesc);
+        add(panelDesc);
+        
         setLayout(layoutYear);
         panelMonths.setLayout(layoutMonths);
         
