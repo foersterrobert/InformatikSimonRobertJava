@@ -34,13 +34,14 @@ public class Ticketautomat extends JFrame
 {
     static int gesamtesGeld;
     static int fetchedGesamtesGeld;
+    static double gesamtesGeldTag;
     static double inGesamt;
     public JPanel jp = new JPanel();
 
     JTextField einwurf = new JTextField(30);
 
     static JLabel gesGeldLabel;
-    JLabel centEingabe = new JLabel("      Eingabe in Cent");
+    JLabel centEingabe = new JLabel("      Eingabe in Euro");
     static JLabel eingeworfen = new JLabel("      0 €");
     static JLabel gekauft = new JLabel();
     static JButton einwurf_sichern = new JButton("<html>"
@@ -67,7 +68,8 @@ public class Ticketautomat extends JFrame
         read();
         
         gesamtesGeld = fetchedGesamtesGeld;
-        gesGeldLabel = new JLabel("Eingenommenes Geld: "+gesamtesGeld/100 +"€");
+        gesamtesGeldTag = gesamtesGeld / 100;
+        gesGeldLabel = new JLabel("Eingenommenes Geld: "+ String.format("%,.2f", gesamtesGeldTag) +"€");
 
         hinzugefuegteTickets[0] = new Ticket("Gruppenticket", 500);
         hinzugefuegteTickets[1] = new Ticket("Einzelticket", 100);
@@ -97,11 +99,17 @@ public class Ticketautomat extends JFrame
                 
                 if (eingeworfenInput.equals("Schluessel")){
                     ticketHinzufügen();
-                } else {
-                    int eingeworfenInt = Integer.parseInt(eingeworfenInput);
-                    inGesamt = inGesamt + eingeworfenInt;
-                    eingeworfen.setText("      "+(inGesamt/100) +" €");
                     einwurf.setText("");
+                } else if (!isNumeric(eingeworfenInput)){
+                    
+                    gekauft.setText("Bitte werfen Sie Geld ein!");
+                    einwurf.setText("");
+                } else {
+                    double eingeworfenInt = Double.parseDouble(eingeworfenInput);
+                    inGesamt = inGesamt + eingeworfenInt;
+                    eingeworfen.setText("      "+ String.format("%,.2f", inGesamt) +" €");
+                    einwurf.setText("");
+                    gekauft.setText("");
                 }
             }
         });
@@ -113,11 +121,16 @@ public class Ticketautomat extends JFrame
                 
                 if (eingeworfenInput.equals("Schluessel")){
                     ticketHinzufügen();
-                } else {
-                    int eingeworfenInt = Integer.parseInt(eingeworfenInput);
-                    inGesamt = inGesamt + eingeworfenInt;
-                    eingeworfen.setText("      "+(inGesamt/100) +" €");
                     einwurf.setText("");
+                } else if (!isNumeric(eingeworfenInput)){
+                    gekauft.setText("Bitte werfen Sie Geld ein!");
+                    einwurf.setText("");
+                } else {
+                    double eingeworfenInt = Double.parseDouble(eingeworfenInput);
+                    inGesamt = inGesamt + eingeworfenInt;
+                    eingeworfen.setText("      "+ String.format("%,.2f", inGesamt) +" €");
+                    einwurf.setText("");
+                    gekauft.setText("");
                 }
             }
         });
@@ -149,7 +162,7 @@ public class Ticketautomat extends JFrame
 
         paeFrame.setVisible(true);
         paeFrame.setSize(400, 400);
-        paeFrame.setTitle("Preisändern");
+        paeFrame.setTitle("Preis ändern");
 
         JLabel descLabel = new JLabel("Ändern Sie den Ticketpreis, indem Sie den Ticketnamen von jenem Ticket eingeben. Ein neues Ticket kann erstellt werden, wenn ein Ticketname eingegeben wird, der nicht vorhanden ist."); // Formatierung fehlt
         JLabel newTicketnameLabel = new JLabel("Ticketname");
@@ -172,10 +185,10 @@ public class Ticketautomat extends JFrame
 
                 String ticketnameString = newTicketname.getText();
                 String ticketpreisString = newTicketpreis.getText();
-                int ticketpreisInt = Integer.parseInt(ticketpreisString);
+                Double ticketpreisDouble = Double.parseDouble(ticketpreisString);
+                int ticketpreisInt = (int) (ticketpreisDouble * 100);
 
                 for (int i = 0; i < nummerNeuesTicket; i++){
-                    System.out.println(hinzugefuegteTickets[i].ticketname);
                     if (hinzugefuegteTickets[i].ticketname.equals(ticketnameString)){
                         jp.remove(hinzugefuegteTickets[i]);
                     }
@@ -223,6 +236,19 @@ public class Ticketautomat extends JFrame
       FileWriter f = new FileWriter("gesamtesGeld.txt");
       f.write(gesamtesGeld+"");
       f.close();
+    }
+
+    // Diese Methode prüft, ob es sich bei dem eingegebenen String um eine Nummer handelt.
+    public boolean isNumeric(String strNum) {
+        if (strNum == null) {
+            return false;
+        }
+        try {
+            double d = Double.parseDouble(strNum);
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
+        return true;
     }
 
     public static void main(String[]arg) throws UnsupportedLookAndFeelException, IllegalAccessException {

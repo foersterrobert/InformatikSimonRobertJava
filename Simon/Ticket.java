@@ -10,7 +10,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-/**
+/** 
  * Diese Klassse ist für jegliche Prozesse zuständig, die direkt mit der
  * Verarbeitung des Tickets zu tun haben.
  * 
@@ -19,7 +19,8 @@ import javax.swing.JPanel;
  */
 
 public class Ticket extends JPanel {
-    public int preis;
+    public double preis;
+    public double preisTag;
     public String ticketname;
     static JButton ticketBtn;
 
@@ -29,7 +30,9 @@ public class Ticket extends JPanel {
     public Ticket(String _ticketname, int _preis) {
         preis = _preis;
         ticketname = _ticketname;
-        ticketBtn = new JButton(ticketname + " " + preis / 100 + " €");
+        preisTag = preis / 100;
+        
+        ticketBtn = new JButton(ticketname + " " + String.format("%,.2f", preisTag) + " €");
 
         ticketBtn.setToolTipText("Ein " + ticketname + " kaufen!");
 
@@ -37,11 +40,15 @@ public class Ticket extends JPanel {
         // wird.
         ticketBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (Ticketautomat.inGesamt >= preis) {
-                    Ticketautomat.inGesamt -= preis;
-                    Ticketautomat.eingeworfen.setText("      " + (Ticketautomat.inGesamt / 100) + " €");
+                if (Ticketautomat.inGesamt >= preisTag) {
+                    Ticketautomat.inGesamt -= preisTag;
+                    Ticketautomat.eingeworfen.setText("      " + String.format("%,.2f", Ticketautomat.inGesamt) + " €");
+
                     ticketDrucken();
                     Ticketautomat.gesamtesGeld += preis;
+                    Ticketautomat.gesamtesGeldTag = Ticketautomat.gesamtesGeld / 100;
+                    System.out.println(Ticketautomat.gesamtesGeldTag);
+                    Ticketautomat.gesGeldLabel.setText("Eingenommenes Geld: "+ String.format("%,.2f", Ticketautomat.gesamtesGeldTag) +"€");
                     try {
                         Ticketautomat.write();
                     } catch (java.io.IOException ioe) {
@@ -74,7 +81,7 @@ public class Ticket extends JPanel {
         tdFrame.setTitle(ticketname);
 
         JButton jbticketname = new JButton(ticketname);
-        JButton jbticketpreis = new JButton("" + preis / 100 + " €");
+        JButton jbticketpreis = new JButton("" + String.format("%,.2f", preisTag) + " €");
         JButton jbcurrentDate = new JButton(dateForButton);
         JButton jbcurrentDateHM = new JButton(dateForButtonhm);
 
