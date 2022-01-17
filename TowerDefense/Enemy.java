@@ -3,7 +3,7 @@ import java.awt.image.ImageObserver;
 import java.io.*;
 import javax.swing.*;
 
-public class javaEnemy extends JPanel{
+public class Enemy extends JPanel{
     public static final int UNIT_SIZE = 50;
     int[][] cellspathCords;
     int positionIndex = 1;
@@ -11,9 +11,13 @@ public class javaEnemy extends JPanel{
     int x;
     int y;
     String javaIconPath = "assets/java_logo.png";
+    Toolkit tk;
+    Image javaIcon;
     
-    public javaEnemy() throws IOException{
-        cellspathCords = Board.cellspathCords;
+    public Enemy() throws IOException{
+        tk = Toolkit.getDefaultToolkit();
+        javaIcon = tk.getImage(javaIconPath);
+        cellspathCords = Game.cellspathCords;
         x = cellspathCords[0][0] * UNIT_SIZE;
         y = cellspathCords[0][1] * UNIT_SIZE + UNIT_SIZE/2;
     }
@@ -41,18 +45,18 @@ public class javaEnemy extends JPanel{
             Math.abs(cellspathCords[positionIndex][1] * UNIT_SIZE + UNIT_SIZE/2 - y) <= speed*2
         ) {
                 positionIndex++;
+                positionIndex = positionIndex % cellspathCords.length;
         }
     }
 
     public void draw(Graphics g){
-        Toolkit tk = Toolkit.getDefaultToolkit();
-        Image javaIcon = tk.getImage(javaIconPath);
         g.drawImage(
             javaIcon, 
             x, 
             y, 
             (ImageObserver) this);
         g.dispose();
+        tk.sync();
     }
 }
  

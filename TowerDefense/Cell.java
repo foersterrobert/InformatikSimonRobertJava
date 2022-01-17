@@ -1,13 +1,13 @@
 import java.awt.*;
 
-public class cell {
+public class Cell {
     int x;
     int y;
     int width;
     int height;
     Color color = Color.BLACK;
 
-    public cell(int x, int y, int width, int height) {
+    public Cell(int x, int y, int width, int height) {
         this.x = x;
         this.y = y;
         this.width = width;

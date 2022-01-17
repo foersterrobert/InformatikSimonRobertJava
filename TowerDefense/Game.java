@@ -3,22 +3,26 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
 
-public class Board extends JFrame implements MouseListener {
+public class Game extends JFrame implements MouseListener {
     JPanel panel = new JPanel();
-    cell[][] cells = new cell[10][10];
-    javaEnemy jEnemy;
+    Cell[][] cells = new Cell[10][10];
+    Enemy jEnemy;
     int hp = 10;
+    JLabel hpLabel = new JLabel("HP: " + hp);
     public static final int UNIT_SIZE = 50;
     public static int[][] cellspathCords = {{2, 0}, {2, 1}, {2, 2}, {3, 2}, {4, 2}, {4, 3}, {4, 4}, {3, 4}, {2, 4}, {2, 5}, {2, 6}, {2, 7}, {3, 7}, {4, 7}, {5, 7}, {6, 7}, {7, 7}, {7, 8}, {7, 9}};
 
-    public Board() throws IOException, InterruptedException {
+    public Game() throws IOException, InterruptedException {
 
         boardGrid();
         cellspath();
         
-        jEnemy = new javaEnemy();
-        this.add(jEnemy);
-        setSize(500, 525);
+        jEnemy = new Enemy();
+        add(jEnemy);
+        panel.setLayout(null);
+        panel.add(hpLabel);
+        hpLabel.setBounds(10, 600, 100, 25);
+        setSize(500, 625);
         add(panel);
         setVisible(true);
         setResizable(false);
@@ -26,7 +30,7 @@ public class Board extends JFrame implements MouseListener {
         setLocationRelativeTo(null);
 
         while (true){
-            repaint();
+            // repaint();
             move();
             Thread.sleep(10);
         }
@@ -39,7 +43,7 @@ public class Board extends JFrame implements MouseListener {
     public void boardGrid(){
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
-                cells[i][j] = new cell(i, j, UNIT_SIZE, UNIT_SIZE);
+                cells[i][j] = new Cell(i, j, UNIT_SIZE, UNIT_SIZE);
             }
         }
     }
