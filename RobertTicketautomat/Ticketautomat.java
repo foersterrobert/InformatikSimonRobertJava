@@ -79,6 +79,7 @@ public class Ticketautomat {
         passwordBtn.addActionListener(l -> {
             String inputPasswordString = passwordInput.getText();
             if (inputPasswordString.equals("Passwort")) {
+                passwordInput.setText("");
                 passwordDialog.dispose();
                 settingsDialog.setLocationRelativeTo(frame);
                 settingsDialog.setVisible(true);
