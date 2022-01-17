@@ -53,7 +53,6 @@ public class DayYearView extends JButton implements ActionListener{
         
         this.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                System.out.println(buttonLabelCurrentDate+" "+yearIndex);
                 Ticketautomat.cal.set(Calendar.YEAR, yearIndex);
                 Ticketautomat.cal.set(Calendar.MONTH, monthIndex);
                 Ticketautomat.cal.set(Calendar.DAY_OF_MONTH, dayOfMonthIndex);

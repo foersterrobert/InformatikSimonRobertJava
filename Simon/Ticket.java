@@ -42,7 +42,7 @@ public class Ticket extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 if (Ticketautomat.inGesamt >= preisTag) {
                     Ticketautomat.inGesamt -= preisTag;
-                    Ticketautomat.eingeworfen.setText("      " + String.format("%,.2f", Ticketautomat.inGesamt) + " €");
+                    Ticketautomat.eingeworfen.setText("<html>"+ "<center><font color=#FFFFFF>"+String.format("%,.2f", Ticketautomat.inGesamt) +" €"+"</font></center>");
 
                     ticketDrucken();
                     Ticketautomat.gesamtesGeld += preis;
@@ -76,8 +76,9 @@ public class Ticket extends JPanel {
         String dateForButtonhm = dfhm.format(datehm);
 
         tdFrame.setVisible(true);
-        tdFrame.setSize(200, 200);
+        tdFrame.setSize(200, 120);
         tdFrame.setTitle(ticketname);
+        tdFrame.setResizable(false);
 
         JButton jbticketname = new JButton(ticketname);
         JButton jbticketpreis = new JButton("" + String.format("%,.2f", preisTag) + " €");

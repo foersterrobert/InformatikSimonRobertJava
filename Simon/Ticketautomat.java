@@ -41,8 +41,10 @@ public class Ticketautomat extends JFrame
     JTextField einwurf = new JTextField(30);
 
     static JLabel gesGeldLabel;
-    JLabel centEingabe = new JLabel("      Eingabe in Euro");
-    static JLabel eingeworfen = new JLabel("      0 €");
+    JLabel centEingabe = new JLabel("<html>"
+    + "<center><font color=#FFFFFF>Eingabe in Euro</font></center>");
+    static JLabel eingeworfen = new JLabel("<html>"
+    + "<font color=#FFFFFF>      0 €");
     static JLabel gekauft = new JLabel();
     static JButton einwurf_sichern = new JButton("<html>"
                  + "<font color=#FF0000>Bestätigen</font>");
@@ -54,7 +56,6 @@ public class Ticketautomat extends JFrame
 
     static Calendar cal = Calendar.getInstance();
     static JButton datumAuswaehlen;
-    
                  
 
     /**
@@ -73,12 +74,12 @@ public class Ticketautomat extends JFrame
 
         hinzugefuegteTickets[0] = new Ticket("Gruppenticket", 500);
         hinzugefuegteTickets[1] = new Ticket("Einzelticket", 100);
-
+        
         einwurf_sichern.setBorderPainted(false);
         einwurf_sichern.setBackground(Color.GRAY);
         einwurf_sichern.setFocusPainted(false);
-        einwurf_sichern.setSize(10, 10);
-
+        
+        
         DateFormat df = new SimpleDateFormat("EEE, d.M.yyyy");
         Date date = cal.getTime();
         String dateForButton = df.format(date);
@@ -102,12 +103,13 @@ public class Ticketautomat extends JFrame
                     einwurf.setText("");
                 } else if (!isNumeric(eingeworfenInput)){
                     
-                    gekauft.setText("Bitte werfen Sie Geld ein!");
+                    gekauft.setText("<html>"
+                    + "<center><font color=#FFFFFF>Bitte werfen Sie Geld ein!</font></center>");
                     einwurf.setText("");
                 } else {
                     double eingeworfenInt = Double.parseDouble(eingeworfenInput);
                     inGesamt = inGesamt + eingeworfenInt;
-                    eingeworfen.setText("      "+ String.format("%,.2f", inGesamt) +" €");
+                    eingeworfen.setText("<html>"+ "<center><font color=#FFFFFF>"+String.format("%,.2f", inGesamt) +" €"+"</font></center>");
                     einwurf.setText("");
                     gekauft.setText("");
                 }
@@ -123,12 +125,13 @@ public class Ticketautomat extends JFrame
                     ticketHinzufügen();
                     einwurf.setText("");
                 } else if (!isNumeric(eingeworfenInput)){
-                    gekauft.setText("Bitte werfen Sie Geld ein!");
+                    gekauft.setText("<html>"
+                    + "<center><font color=#FFFFFF>Bitte werfen Sie Geld ein!</font></center>");
                     einwurf.setText("");
                 } else {
                     double eingeworfenInt = Double.parseDouble(eingeworfenInput);
                     inGesamt = inGesamt + eingeworfenInt;
-                    eingeworfen.setText("      "+ String.format("%,.2f", inGesamt) +" €");
+                    eingeworfen.setText("<html>"+ "<center><font color=#FFFFFF>"+String.format("%,.2f", inGesamt) +" €"+"</font></center>");
                     einwurf.setText("");
                     gekauft.setText("");
                 }
@@ -270,5 +273,6 @@ public class Ticketautomat extends JFrame
             cnfe.printStackTrace();
         }
         new Ticketautomat();
+        
     }
 }
