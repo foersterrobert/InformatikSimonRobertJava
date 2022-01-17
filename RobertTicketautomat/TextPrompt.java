@@ -5,10 +5,10 @@ import javax.swing.border.*;
 import javax.swing.event.*;
 import javax.swing.text.*;
 
-/**
-Nicht mein Code :)
+/*
+Nicht mein Code :) | Nur für Placeholder
 http://www.camick.com/java/source/TextPrompt.java
- */
+*/
 
 public class TextPrompt extends JLabel
 	implements FocusListener, DocumentListener

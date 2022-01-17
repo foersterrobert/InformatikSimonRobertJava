@@ -139,9 +139,13 @@ public class Ticketautomat {
         zurueckgebenBtn.setBounds(10, 370, 120, 30);
         settingsBtn.setBounds(135, 370, 200, 30);
 
+        passwordContainer.setLayout(null);
         passwordContainer.add(passwordInput);
         passwordContainer.add(passwordBtn);
         passwordDialog.add(passwordContainer);
+
+        passwordInput.setBounds(10, 10, 240, 30);
+        passwordBtn.setBounds(10, 45, 91, 30);
         
         settingsContainer.add(bisherEingenommenLabel);
         JLabel[] settingsTicketLabels = new JLabel[tickets.length];
