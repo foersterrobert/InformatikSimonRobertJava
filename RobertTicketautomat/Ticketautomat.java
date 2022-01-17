@@ -20,12 +20,10 @@ public class Ticketautomat {
 
         JFrame frame = new JFrame("Ticketautomat");
         JPanel container = new JPanel();
-        container.setBackground(Color.white);
         JLabel title = new JLabel("Ticketautomat");
         title.setFont(new Font("Arial", Font.BOLD, 24));
         JMenuBar menuBar = new JMenuBar();
         JMenu ticketMenu = new JMenu("Ticketauswahl");
-        ticketMenu.setFont(new Font("Arial", Font.PLAIN, 12));
         ticketMenu.setCursor(new Cursor(Cursor.HAND_CURSOR));
         
         ImageIcon icon = new ImageIcon("icon.png");
