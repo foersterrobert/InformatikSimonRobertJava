@@ -20,10 +20,14 @@ public class Ticketautomat {
 
         JFrame frame = new JFrame("Ticketautomat");
         JPanel container = new JPanel();
+        container.setBackground(Color.white);
         JLabel title = new JLabel("Ticketautomat");
         title.setFont(new Font("Arial", Font.BOLD, 24));
         JMenuBar menuBar = new JMenuBar();
         JMenu ticketMenu = new JMenu("Ticketauswahl");
+        ticketMenu.setFont(new Font("Arial", Font.PLAIN, 12));
+        ticketMenu.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        
         ImageIcon icon = new ImageIcon("icon.png");
 
         JLabel bisherGezahltLabel = new JLabel("Bisher gezahlt: " + bisherGezahlt + "€");
@@ -31,11 +35,27 @@ public class Ticketautomat {
         JLabel ticketLabel = new JLabel("Ticket: " + ticket.ticketName);
         JLabel ticketPreisLabel = new JLabel("Preis: " + ticket.ticketPreis + "€");
         JTextField ticketInput = new JTextField(10);
+        TextPrompt ticketInputPlaceholder = new TextPrompt("Münzen einwerfen...", ticketInput);
         JButton einwerfenBtn = new JButton("Einwerfen");
+        einwerfenBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
         JButton zurueckgebenBtn = new JButton("Zurückgeben");
+        zurueckgebenBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
         JButton settingsBtn = new JButton("Einstellungen ⚙️");
+        settingsBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+        JDialog passwordDialog = new JDialog();
+        passwordDialog.setTitle("Passwort");
+        passwordDialog.setSize(300, 200);
+        passwordDialog.setResizable(false);
+        JPanel passwordContainer = new JPanel();
+        JTextField passwordInput = new JTextField(10);
+        TextPrompt passwordInputPlaceholder = new TextPrompt("Passwort eingeben...", passwordInput);
+        JButton passwordBtn = new JButton("OK");
 
         JDialog settingsDialog = new JDialog();
+        settingsDialog.setTitle("Einstellungen");
+        settingsDialog.setSize(300, 200);
+        settingsDialog.setResizable(false);
         JPanel settingsContainer = new JPanel();
 
         einwerfenBtn.addActionListener(l -> {
@@ -58,11 +78,20 @@ public class Ticketautomat {
             }
         });
 
+        passwordBtn.addActionListener(l -> {
+            String inputPasswordString = passwordInput.getText();
+            if (inputPasswordString.equals("Passwort")) {
+                passwordDialog.dispose();
+                settingsDialog.setLocationRelativeTo(frame);
+                settingsDialog.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(frame, "Falsches Passwort!", "Fehler", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+
         settingsBtn.addActionListener(l -> {
-            settingsDialog.setTitle("Einstellungen");
-            settingsDialog.setSize(300, 200);
-            settingsDialog.setLocationRelativeTo(frame);
-            settingsDialog.setVisible(true);
+            passwordDialog.setLocationRelativeTo(frame);
+            passwordDialog.setVisible(true);
         });
 
         zurueckgebenBtn.addActionListener(l -> {
@@ -111,6 +140,10 @@ public class Ticketautomat {
         einwerfenBtn.setBounds(255, 332, 91, 30);
         zurueckgebenBtn.setBounds(10, 370, 120, 30);
         settingsBtn.setBounds(135, 370, 200, 30);
+
+        passwordContainer.add(passwordInput);
+        passwordContainer.add(passwordBtn);
+        passwordDialog.add(passwordContainer);
         
         settingsContainer.add(bisherEingenommenLabel);
         JLabel[] settingsTicketLabels = new JLabel[tickets.length];
@@ -131,7 +164,7 @@ public class Ticketautomat {
                     tickets[i].ticketPreis = Float.parseFloat(settingsTicketInputs[i].getText());
                 }
                 ticketPreisLabel.setText("Preis: " + ticket.ticketPreis + "€");
-                settingsDialog.setVisible(false);
+                settingsDialog.dispose();
             }
             catch (Exception e) {
                 JOptionPane.showMessageDialog(frame, "Bitte geben Sie nur Zahlen ein!", "Fehler",
@@ -146,7 +179,6 @@ public class Ticketautomat {
         settingsDialog.add(settingsContainer);
         
         frame.add(container);
-
         frame.setVisible(true);
     }
     
