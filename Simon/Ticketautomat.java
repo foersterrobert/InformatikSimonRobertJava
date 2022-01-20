@@ -162,12 +162,18 @@ public class Ticketautomat extends JFrame
 
         JFrame paeFrame = new JFrame();
         JPanel paeJP = new JPanel();
+        JPanel tnJP = new JPanel();
+        JPanel tpJP = new JPanel();
+
+        GridLayout paeLayout = new GridLayout(1, 0);
 
         paeFrame.setVisible(true);
         paeFrame.setSize(400, 400);
         paeFrame.setTitle("Preis ändern");
+        paeFrame.setResizable(false);
+        paeFrame.setLayout(paeLayout);
 
-        JLabel descLabel = new JLabel("Ändern Sie den Ticketpreis, indem Sie den Ticketnamen von jenem Ticket eingeben. Ein neues Ticket kann erstellt werden, wenn ein Ticketname eingegeben wird, der nicht vorhanden ist."); // Formatierung fehlt
+        JLabel descLabel = new JLabel("<html> Ändern Sie den Ticketpreis, indem Sie den <br> Ticketnamen von jenem Ticket eingeben. <br> Ein neues Ticket kann erstellt werden, <br> wenn ein Ticketname  eingegeben wird, <br> der nicht vorhanden ist."); // Formatierung fehlt
         JLabel newTicketnameLabel = new JLabel("Ticketname");
         JTextField newTicketname = new JTextField(20);
         JLabel newTicketpreisLabel = new JLabel("Ticketpreis");
@@ -175,10 +181,12 @@ public class Ticketautomat extends JFrame
         JButton newTicketBestaetigen = new JButton("Preis ändern/Ticket hinzufügen");
 
         paeJP.add(descLabel);
-        paeJP.add(newTicketnameLabel);
-        paeJP.add(newTicketname);
-        paeJP.add(newTicketpreisLabel);
-        paeJP.add(newTicketpreis);
+        tnJP.add(newTicketnameLabel);
+        tnJP.add(newTicketname);
+        tpJP.add(newTicketpreisLabel);
+        tpJP.add(newTicketpreis);
+        paeJP.add(tnJP);
+        paeJP.add(tpJP);
         paeJP.add(newTicketBestaetigen);
         paeJP.add(gesGeldLabel);
         paeFrame.add(paeJP);
