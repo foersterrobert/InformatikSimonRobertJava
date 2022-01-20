@@ -21,7 +21,8 @@ public class MainFrame extends JFrame{
 
         setVisible(true);
         setTitle("Calendar V2.0");
-        setSize(1920, 1080);
+        setSize(1640, 920);
+        setResizable(false);
     }
     
     /*public static void main(String[]args){

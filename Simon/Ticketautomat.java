@@ -65,6 +65,7 @@ public class Ticketautomat extends JFrame
     {
         setTitle("Ticketautomat");
         setVisible(true);
+        setResizable(false);
         setSize(400, 400);
         read();
         
@@ -214,7 +215,8 @@ public class Ticketautomat extends JFrame
                 jp.add(gekauft);
                 jp.add(datumAuswaehlen);
 
-                repaint(); 
+                repaint();
+                validate();
                 
                 newTicketname.setText("");
                 newTicketpreis.setText("");
