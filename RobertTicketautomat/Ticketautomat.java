@@ -3,6 +3,9 @@ import java.io.File;
 import java.io.PrintWriter;
 import java.util.Scanner;
 import javax.swing.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 
 public class Ticketautomat {
     float bisherGezahlt;
@@ -41,12 +44,19 @@ public class Ticketautomat {
         JButton settingsBtn = new JButton("Einstellungen ⚙️");
         settingsBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
+        JDialog ticketDialog = new JDialog();
+        ticketDialog.setTitle("Ticket");
+        ticketDialog.setSize(300, 200);
+        ticketDialog.setResizable(false);
+        JPanel ticketContainer = new JPanel();
+
+    
         JDialog passwordDialog = new JDialog();
         passwordDialog.setTitle("Passwort");
         passwordDialog.setSize(300, 200);
         passwordDialog.setResizable(false);
         JPanel passwordContainer = new JPanel();
-        JTextField passwordInput = new JTextField(10);
+        JPasswordField passwordInput = new JPasswordField(10);
         TextPrompt passwordInputPlaceholder = new TextPrompt("Passwort eingeben...", passwordInput);
         JButton passwordBtn = new JButton("OK");
 
@@ -65,8 +75,11 @@ public class Ticketautomat {
                 bisherGezahltLabel.setText("Bisher gezahlt: " + bisherGezahlt + "€");
                 bisherEingenommenLabel.setText("Durch Tickets eingenommen: " + bisherEingenommen + "€");
                 if (wechselGeld >= 0) {
+                    LocalDateTime myDateObj = LocalDateTime.now();
+                    DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+                    String formattedDate = myDateObj.format(myFormatObj);
                     JOptionPane.showMessageDialog(frame,
-                            ticket.ticketName + " gedruckt. \n Wechselgeld: " + wechselGeld + "€", "Ticket gedruckt",
+                            ticket.ticketName + " gedruckt. \nWechselgeld: " + wechselGeld + "€\n" + formattedDate, "Ticket gedruckt",
                             JOptionPane.INFORMATION_MESSAGE);
                 }
             } 
@@ -129,16 +142,18 @@ public class Ticketautomat {
         container.add(einwerfenBtn);
         container.add(zurueckgebenBtn);
         container.add(settingsBtn);
+
+        System.out.println(zurueckgebenBtn.getPreferredSize());
         
         title.setBounds(10, 10, 200, 30);
-        menuBar.setBounds(260, 10, 95, 30);
+        menuBar.setBounds(255, 10, 115, 30);
         ticketLabel.setBounds(15, 40, 200, 30);
         ticketPreisLabel.setBounds(15, 60, 200, 30);
         bisherGezahltLabel.setBounds(10, 302, 200, 30);
         ticketInput.setBounds(10, 332, 240, 30);
-        einwerfenBtn.setBounds(255, 332, 91, 30);
-        zurueckgebenBtn.setBounds(10, 370, 120, 30);
-        settingsBtn.setBounds(135, 370, 200, 30);
+        einwerfenBtn.setBounds(255, 332, 105, 30);
+        zurueckgebenBtn.setBounds(10, 370, 128, 30);
+        settingsBtn.setBounds(143, 370, 200, 30);
 
         passwordContainer.setLayout(null);
         passwordContainer.add(passwordInput);
