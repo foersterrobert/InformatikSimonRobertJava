@@ -143,8 +143,6 @@ public class Ticketautomat {
         container.add(zurueckgebenBtn);
         container.add(settingsBtn);
 
-        System.out.println(zurueckgebenBtn.getPreferredSize());
-        
         title.setBounds(10, 10, 200, 30);
         menuBar.setBounds(255, 10, 115, 30);
         ticketLabel.setBounds(15, 40, 200, 30);
