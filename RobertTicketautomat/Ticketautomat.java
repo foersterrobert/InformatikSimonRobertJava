@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.awt.event.*;
 import java.io.File;
 import java.io.PrintWriter;
 import java.util.Scanner;
@@ -15,8 +16,14 @@ public class Ticketautomat {
     JMenuItem[] menuitems = { new JMenuItem("Kinder-Ticket"), new JMenuItem("Erwachsenen-Ticket"),
             new JMenuItem("Studenten-Ticket"), new JMenuItem("Gruppen-Ticket") };
     Ticket ticket;
+    LocalDateTime time;
+    DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("dd.MM. HH:mm");
+    String formattedtime;
 
     public Ticketautomat() {
+        time = LocalDateTime.now();
+        formattedtime = time.format(timeFormat);
+
         bisherGezahlt = 0.0f;
         bisherEingenommen = read();
         ticket = tickets[0];
@@ -30,6 +37,7 @@ public class Ticketautomat {
         ticketMenu.setCursor(new Cursor(Cursor.HAND_CURSOR));
         
         ImageIcon icon = new ImageIcon("icon.png");
+        JLabel timeLabel = new JLabel(formattedtime);
 
         JLabel bisherGezahltLabel = new JLabel("Bisher gezahlt: " + bisherGezahlt + "€");
         JLabel bisherEingenommenLabel = new JLabel("Durch Tickets eingenommen: " + bisherEingenommen + "€");
@@ -50,7 +58,6 @@ public class Ticketautomat {
         ticketDialog.setResizable(false);
         JPanel ticketContainer = new JPanel();
 
-    
         JDialog passwordDialog = new JDialog();
         passwordDialog.setTitle("Passwort");
         passwordDialog.setSize(300, 200);
@@ -66,6 +73,16 @@ public class Ticketautomat {
         settingsDialog.setResizable(false);
         JPanel settingsContainer = new JPanel();
 
+        ActionListener updateTime = new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                time = LocalDateTime.now();
+                formattedtime = time.format(timeFormat);
+                timeLabel.setText(formattedtime);
+            }
+        };
+        Timer timer = new Timer(45000, updateTime);
+        timer.start();
+
         einwerfenBtn.addActionListener(l -> {
             try {
                 String inputSummeString = ticketInput.getText();
@@ -75,22 +92,20 @@ public class Ticketautomat {
                 bisherGezahltLabel.setText("Bisher gezahlt: " + bisherGezahlt + "€");
                 bisherEingenommenLabel.setText("Durch Tickets eingenommen: " + bisherEingenommen + "€");
                 if (wechselGeld >= 0) {
-                    LocalDateTime myDateObj = LocalDateTime.now();
-                    DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-                    String formattedDate = myDateObj.format(myFormatObj);
                     JOptionPane.showMessageDialog(frame,
-                            ticket.ticketName + " gedruckt. \nWechselgeld: " + wechselGeld + "€\n" + formattedDate, "Ticket gedruckt",
+                            ticket.ticketName + " gedruckt. \nWechselgeld: " + wechselGeld + "€", "Ticket gedruckt",
                             JOptionPane.INFORMATION_MESSAGE);
                 }
             } 
             catch (Exception e) {
-                JOptionPane.showMessageDialog(frame, "Bitte werfen Sie nur Münzen ein! :)", "Fehler",
+                JOptionPane.showMessageDialog(frame, "Bitte werfen Sie Münzen ein! :)", "Fehler",
                         JOptionPane.ERROR_MESSAGE);
             }
         });
 
         passwordBtn.addActionListener(l -> {
-            String inputPasswordString = passwordInput.getText();
+            char[] inputPasswordValue = passwordInput.getPassword();
+            String inputPasswordString = String.valueOf(inputPasswordValue);
             if (inputPasswordString.equals("Passwort")) {
                 passwordInput.setText("");
                 passwordDialog.dispose();
@@ -135,6 +150,7 @@ public class Ticketautomat {
         container.setLayout(null);
         container.add(title);
         container.add(menuBar);
+        container.add(timeLabel);
         container.add(ticketLabel);
         container.add(ticketPreisLabel);
         container.add(bisherGezahltLabel);
@@ -148,6 +164,7 @@ public class Ticketautomat {
         ticketLabel.setBounds(15, 40, 200, 30);
         ticketPreisLabel.setBounds(15, 60, 200, 30);
         bisherGezahltLabel.setBounds(10, 302, 200, 30);
+        timeLabel.setBounds(275, 302, 100, 30);
         ticketInput.setBounds(10, 332, 240, 30);
         einwerfenBtn.setBounds(255, 332, 105, 30);
         zurueckgebenBtn.setBounds(10, 370, 128, 30);
@@ -158,7 +175,7 @@ public class Ticketautomat {
         passwordContainer.add(passwordBtn);
         passwordDialog.add(passwordContainer);
 
-        passwordInput.setBounds(10, 10, 240, 30);
+        passwordInput.setBounds(10, 10, 280, 30);
         passwordBtn.setBounds(10, 45, 91, 30);
         
         settingsContainer.add(bisherEingenommenLabel);
