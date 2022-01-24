@@ -1,10 +1,16 @@
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Reader;
 import java.net.URL;
+import java.util.Iterator;
 import java.util.Scanner;
 
 import javax.swing.JButton;
@@ -13,45 +19,75 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import org.json.simple.*;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 public class GUI extends JFrame {
     JPanel jp = new JPanel();
-    JTextField jtf = new JTextField(30);
+    JTextField jtf = new JTextField(10);
     JButton jsubmit = new JButton("Submit");
-    JLabel wetterLabel = new JLabel("");
+    JLabel ortLabel = new JLabel("");
 
-    public GUI() throws IOException {
+    public GUI() throws IOException, ParseException {
         jp.add(jtf);
         jp.add(jsubmit);
-        jp.add(wetterLabel);
+        jp.add(ortLabel);
         add(jp);
         setVisible(true);
         setSize(400, 400);
-        fetch();
+        jsubmit.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String input = jtf.getText();
+                try {
+                    fetch(input);
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                } catch (ParseException e1) {
+                    e1.printStackTrace();
+                }
+                jtf.setText("");
+            }
+        });
+        jtf.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String input = jtf.getText();
+                try {
+                    fetch(input);
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                } catch (ParseException e1) {
+                    e1.printStackTrace();
+                }
+                jtf.setText("");
+            }
+        });
+        fetch("Hamburg");
     }
 
-    public void fetch() throws IOException {
-        URL website = new URL(
-            "https://api.openweathermap.org/data/2.5/weather?q=eimsbuettel&appid=92c52fc8f6b4286b0a9b8106b4568820&cnt=5&units=metric&lang=de"
-        );
+    public void fetch(String ort) throws IOException, ParseException {
+        String url = "https://api.openweathermap.org/data/2.5/weather?q=" + ort + "&appid=92c52fc8f6b4286b0a9b8106b4568820&cnt=5&units=metric&lang=de";
+        URL website = new URL(url);
         BufferedReader in = new BufferedReader(new InputStreamReader(website.openStream()));
-        JSONTokener tokener = new JSONTokener(in);
-        JSONObject json = new JSONObject(tokener);
-
-        StringBuilder sb = new StringBuilder();
-        String line;
-        while ((line = in.readLine()) != null) {
-            sb.append(line);
-        }
-        JSONObject json = new JSONObject(sb.toString());
-
         String inputLine;
         while ((inputLine = in.readLine()) != null) {
-            System.out.println(inputLine);
-            wetterLabel.setText(inputLine);
             write(inputLine);
         }
         in.close();
+
+        JSONParser parser = new JSONParser();
+
+        try (Reader reader = new FileReader("wetter.json")) {
+
+            JSONObject jsonObject = (JSONObject) parser.parse(reader);
+
+            String name = (String) jsonObject.get("name");
+            ortLabel.setText(name);
+
+            long timezone = (long) jsonObject.get("timezone");
+            System.out.println(timezone);    
+
+        }
     }
 
     public static void read() {
