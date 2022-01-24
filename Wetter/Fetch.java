@@ -4,7 +4,7 @@ import java.io.InputStreamReader;
 import java.net.URL;
 
 public class Fetch {
-    public Fetch() throws IOException{
+    public Fetch() throws IOException {
         new GUI();
         // String content = getUrlAsString("https://www.google.com");
         // System.out.println(content);

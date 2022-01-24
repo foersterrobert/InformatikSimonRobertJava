@@ -54,7 +54,7 @@ public class Ticket extends JPanel {
                         ioe.printStackTrace();
                     }
                 } else {
-                    Ticketautomat.gekauft.setText("Bitte werfen Sie genügend Geld ein.");
+                    Ticketautomat.gekauft.setText("<html>"+ "<center><font color=#FFFFFF>Bitte werfen Sie Geld ein!</font></center>");
                 }
             }
         });
