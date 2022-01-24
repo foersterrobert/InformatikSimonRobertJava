@@ -41,13 +41,16 @@ public class Ticketautomat extends JFrame
     JTextField einwurf = new JTextField(30);
 
     static JLabel gesGeldLabel;
+    static JLabel jlPlaceholder = new JLabel("");
+    static JButton jbgeldAuszahlen = new JButton("Geld auszahlen");
     JLabel centEingabe = new JLabel("<html>"
     + "<center><font color=#FFFFFF>Eingabe in Euro</font></center>");
     static JLabel eingeworfen = new JLabel("<html>"
-    + "<font color=#FFFFFF>      0 €");
+    + "<font color=#FFFFFF>      0 €</font>");
     static JLabel gekauft = new JLabel();
     static JButton einwurf_sichern = new JButton("<html>"
                  + "<font color=#FF0000>Bestätigen</font>");
+    
     
     GridLayout layout = new GridLayout(0, 2);
 
@@ -79,6 +82,8 @@ public class Ticketautomat extends JFrame
         einwurf_sichern.setBorderPainted(false);
         einwurf_sichern.setBackground(Color.GRAY);
         einwurf_sichern.setFocusPainted(false);
+
+        jbgeldAuszahlen.setBackground(Color.GRAY);
         
         
         DateFormat df = new SimpleDateFormat("EEE, d.M.yyyy");
@@ -138,6 +143,12 @@ public class Ticketautomat extends JFrame
                 }
             }
         });
+
+        jbgeldAuszahlen.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                geldAuszahlen();
+            }
+        });
         
 
         // Es werden die ersten wichtigen Teile des GUIs auf das Panel und dann aufs Frame "gesetzt".
@@ -148,6 +159,8 @@ public class Ticketautomat extends JFrame
         jp.add(hinzugefuegteTickets[0]);
         jp.add(hinzugefuegteTickets[1]);
         jp.add(gekauft);
+        jp.add(jlPlaceholder);
+        jp.add(jbgeldAuszahlen);
         jp.add(datumAuswaehlen);
 
         jp.setLayout(layout);
@@ -156,6 +169,24 @@ public class Ticketautomat extends JFrame
 
     
         add(jp);
+    }
+
+    public void geldAuszahlen() {
+        JFrame gaFrame = new JFrame();
+        gaFrame.setVisible(true);
+        gaFrame.setSize(200, 80);
+        gaFrame.setTitle("Ausgezahltes Geld");
+        gaFrame.setResizable(false);
+        JPanel gaPanel = new JPanel();
+        JLabel gaLabel = new JLabel("<html>" + "<font color=#FFFFFF> Ausgezahltes Geld: <br>" + inGesamt + "</font>");
+
+        gaPanel.add(gaLabel);
+        gaFrame.add(gaPanel);
+
+        inGesamt = 0;
+        eingeworfen.setText("<html>" + "<font color=#FFFFFF> 0 € </font>");
+
+
     }
 
     // Diese Methode erstellt ein GUI, um ein Ticket hinzuzufügen oder den Preis eines bereits vorhandenen Tickets zu ändern. Es kann mit dem passenden Schlüssel:"Schluessel" aufgerufen werden.
