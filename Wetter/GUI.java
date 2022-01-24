@@ -67,8 +67,7 @@ public class GUI extends JFrame {
     }
 
     public void fetch(String ort) throws IOException, ParseException {
-        String url = "https://api.openweathermap.org/data/2.5/weather?q=" + ort
-                + "&appid=92c52fc8f6b4286b0a9b8106b4568820&cnt=5&units=metric&lang=de";
+        String url = "https://api.openweathermap.org/data/2.5/weather?q=" + ort + "&appid=92c52fc8f6b4286b0a9b8106b4568820&cnt=5&units=metric&lang=de";
         URL website = new URL(url);
         BufferedReader in = new BufferedReader(new InputStreamReader(website.openStream()));
         String inputLine;
