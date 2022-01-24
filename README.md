@@ -1,5 +1,4 @@
 # JavaProjectsSimonRobert
-#
 # Ticketautomat (Robert)
 ![TicketRobert](RobertTicketautomat/TicketRobert.png)
 # Ticket kaufen (Simon)
