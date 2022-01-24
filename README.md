@@ -1,4 +1,8 @@
 # JavaProjectsSimonRobert
 ![TicketRobert](RobertTicketautomat/TicketRobert.png)
-![TicketSimon](Simon/Ticketkaufen.gif)
-![TicketSimon](Simon/Calendar.gif)
+# Ticket kaufen (Simon)
+![Ticket kaufen](Simon/Ticketkaufen.gif)
+# Datum auswählen (Simon)
+![Kalendarauswahl](Simon/Calendar.gif)
+# Tickets verändern (Simon)
+![Tickets verändern](Simon/TicketChange.gif)
