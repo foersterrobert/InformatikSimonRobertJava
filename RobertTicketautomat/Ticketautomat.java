@@ -43,8 +43,14 @@ public class Ticketautomat {
         JLabel bisherEingenommenLabel = new JLabel("Durch Tickets eingenommen: " + bisherEingenommen + "€");
         JLabel ticketLabel = new JLabel("Ticket: " + ticket.ticketName);
         JLabel ticketPreisLabel = new JLabel("Preis: " + ticket.ticketPreis + "€");
+
+        ButtonGroup BtnGroup = new ButtonGroup();
+        JRadioButton[] radioButtons = { new JRadioButton("Kurzstrecke", true), new JRadioButton("Nahbereich", false),
+                new JRadioButton("Hamburg AB", false) };
+
         JTextField ticketInput = new JTextField(10);
         TextPrompt ticketInputPlaceholder = new TextPrompt("Münzen einwerfen...", ticketInput);
+
         JButton einwerfenBtn = new JButton("Einwerfen");
         einwerfenBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
         JButton zurueckgebenBtn = new JButton("Zurückgeben");
@@ -52,11 +58,13 @@ public class Ticketautomat {
         JButton settingsBtn = new JButton("Einstellungen ⚙️");
         settingsBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
-        JDialog ticketDialog = new JDialog();
-        ticketDialog.setTitle("Ticket");
-        ticketDialog.setSize(300, 200);
-        ticketDialog.setResizable(false);
-        JPanel ticketContainer = new JPanel();
+        JDialog gekauftDialog = new JDialog();
+        gekauftDialog.setTitle("Ticket");
+        gekauftDialog.setSize(300, 200);
+        gekauftDialog.setResizable(false);
+        JPanel gekauftContainer = new JPanel();
+        JLabel gekauftLabel = new JLabel();
+        JButton gekauftBtn = new JButton("OK");
 
         JDialog passwordDialog = new JDialog();
         passwordDialog.setTitle("Passwort");
@@ -73,6 +81,7 @@ public class Ticketautomat {
         settingsDialog.setResizable(false);
         JPanel settingsContainer = new JPanel();
 
+        // Erneuert alle 45 Sekunden die Uhrzeit
         ActionListener updateTime = new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 time = LocalDateTime.now();
@@ -83,6 +92,7 @@ public class Ticketautomat {
         Timer timer = new Timer(45000, updateTime);
         timer.start();
 
+        // ActionListener für den Einwerfen-Button
         einwerfenBtn.addActionListener(l -> {
             try {
                 String inputSummeString = ticketInput.getText();
@@ -92,9 +102,11 @@ public class Ticketautomat {
                 bisherGezahltLabel.setText("Bisher gezahlt: " + bisherGezahlt + "€");
                 bisherEingenommenLabel.setText("Durch Tickets eingenommen: " + bisherEingenommen + "€");
                 if (wechselGeld >= 0) {
-                    JOptionPane.showMessageDialog(frame,
-                            ticket.ticketName + " gedruckt. \nWechselgeld: " + wechselGeld + "€", "Ticket gedruckt",
-                            JOptionPane.INFORMATION_MESSAGE);
+                    String gekauftLabelText = String.format("<html>%s gekauft<hr>Datum: %s<br>Bereich: Hamburg AB<br>Preis: %s€<br>Wechselgeld: %s€</html>",
+                            ticket.ticketName, formattedtime, ticket.ticketPreis, wechselGeld);
+                    gekauftLabel.setText(gekauftLabelText);
+                    gekauftDialog.setLocationRelativeTo(frame);
+                    gekauftDialog.setVisible(true);
                 }
             } 
             catch (Exception e) {
@@ -103,6 +115,7 @@ public class Ticketautomat {
             }
         });
 
+        // ActionListener für den Passwort-Button
         passwordBtn.addActionListener(l -> {
             char[] inputPasswordValue = passwordInput.getPassword();
             String inputPasswordString = String.valueOf(inputPasswordValue);
@@ -116,11 +129,13 @@ public class Ticketautomat {
             }
         });
 
+        // ActionListener für den Settings-Button
         settingsBtn.addActionListener(l -> {
             passwordDialog.setLocationRelativeTo(frame);
             passwordDialog.setVisible(true);
         });
 
+        // ActionListener für den Zurückgeben-Button
         zurueckgebenBtn.addActionListener(l -> {
             float wechselGeld = GeldZurueckgeben();
             bisherGezahltLabel.setText("Bisher gezahlt: " + bisherGezahlt + "€");
@@ -135,6 +150,7 @@ public class Ticketautomat {
         frame.setSize(380, 450);
         frame.setResizable(false);
         
+        // Fügt die MenüItems der Menüleiste hinzu
         for (int i = 0; i < menuitems.length; i++) {
             ticketMenu.add(menuitems[i]);
             int temp = i;
@@ -146,6 +162,17 @@ public class Ticketautomat {
         }
 
         menuBar.add(ticketMenu);
+
+        // Fügt die Radiobuttons der ButtonGroup hinzu
+        for (int i = 0; i < radioButtons.length; i++) {
+            BtnGroup.add(radioButtons[i]);
+            container.add(radioButtons[i]);
+            radioButtons[i].setBounds(10, 100 + i * 30, 200, 30);
+            int temp = i;
+            radioButtons[i].addActionListener(l -> {
+                ticketPreisLabel.setText("Preis: " + ticket.ticketPreis*(temp+1) + "€");
+            });
+        }
         
         container.setLayout(null);
         container.add(title);
@@ -159,6 +186,7 @@ public class Ticketautomat {
         container.add(zurueckgebenBtn);
         container.add(settingsBtn);
 
+        // Positionierung der Komponenten im Container
         title.setBounds(10, 10, 200, 30);
         menuBar.setBounds(255, 10, 115, 30);
         ticketLabel.setBounds(15, 40, 200, 30);
@@ -169,6 +197,20 @@ public class Ticketautomat {
         einwerfenBtn.setBounds(255, 332, 105, 30);
         zurueckgebenBtn.setBounds(10, 370, 128, 30);
         settingsBtn.setBounds(143, 370, 200, 30);
+
+
+        // ActionListener für den gekauft-Button im gekauft-Dialog
+        gekauftBtn.addActionListener(l -> {
+            gekauftDialog.dispose();
+        });
+
+        gekauftContainer.setLayout(null);
+        gekauftContainer.add(gekauftLabel);
+        gekauftContainer.add(gekauftBtn);
+        gekauftDialog.add(gekauftContainer);
+
+        gekauftLabel.setBounds(10, 10, 250, 100);
+        gekauftBtn.setBounds(10, 125, 200, 30);
 
         passwordContainer.setLayout(null);
         passwordContainer.add(passwordInput);
@@ -210,11 +252,12 @@ public class Ticketautomat {
         settingsDialog.setIconImage(icon.getImage());
         settingsDialog.setResizable(false);
         settingsDialog.add(settingsContainer);
-        
+
         frame.add(container);
         frame.setVisible(true);
     }
     
+    // Methode zum Einwerfen von Münzen
     public float GeldEinwerfen(float betrag) {
         bisherGezahlt += betrag;
         if (bisherGezahlt >= ticket.ticketPreis) {
@@ -226,12 +269,14 @@ public class Ticketautomat {
         return -1;
     }
 
+    // Gibt Geld zurück
     public float GeldZurueckgeben() {
         float wechselgeld = bisherGezahlt;
         bisherGezahlt = 0;
         return wechselgeld;
     }
 
+    // Liest die Eingaben aus der Datei
     public float read() {
         try {
             File eingenommenFile = new File("eingenommen.txt");
@@ -245,7 +290,8 @@ public class Ticketautomat {
             return 0f;
         }
     }
-
+    
+    // Speichert die Einnahmnen in der Datei
     public void write(float eingenommen) {
         try {
             File eingenommenFile = new File("eingenommen.txt");
