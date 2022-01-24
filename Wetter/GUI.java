@@ -13,6 +13,7 @@ import java.net.URL;
 import java.util.Iterator;
 import java.util.Scanner;
 
+import javax.print.DocFlavor.STRING;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -66,7 +67,8 @@ public class GUI extends JFrame {
     }
 
     public void fetch(String ort) throws IOException, ParseException {
-        String url = "https://api.openweathermap.org/data/2.5/weather?q=" + ort + "&appid=92c52fc8f6b4286b0a9b8106b4568820&cnt=5&units=metric&lang=de";
+        String url = "https://api.openweathermap.org/data/2.5/weather?q=" + ort
+                + "&appid=92c52fc8f6b4286b0a9b8106b4568820&cnt=5&units=metric&lang=de";
         URL website = new URL(url);
         BufferedReader in = new BufferedReader(new InputStreamReader(website.openStream()));
         String inputLine;
@@ -79,13 +81,39 @@ public class GUI extends JFrame {
 
         try (Reader reader = new FileReader("wetter.json")) {
 
-            JSONObject jsonObject = (JSONObject) parser.parse(reader);
+            JSONObject wetterJSON = (JSONObject) parser.parse(reader);
 
-            String name = (String) jsonObject.get("name");
+            String name = (String) wetterJSON.get("name");
+            System.out.println("Ortsname: "+name);
             ortLabel.setText(name);
 
-            long timezone = (long) jsonObject.get("timezone");
-            System.out.println(timezone);    
+            long timezone = (long) wetterJSON.get("timezone");
+            System.out.println("Zeitzone: "+timezone);
+
+            JSONObject main = (JSONObject) wetterJSON.get("main");
+            // System.out.println(main);
+
+            Double temp = (Double) main.get("temp");
+            System.out.println("Temperatur: "+temp);
+
+            Long humidity = (Long) main.get("humidity");
+            System.out.println("Luftfeuchtigkeit: "+humidity);
+
+            JSONArray weather = (JSONArray) wetterJSON.get("weather");
+            // System.out.println(weather);
+
+            
+            Iterator<JSONObject> iterator = weather.iterator();
+            while (iterator.hasNext()) {
+                JSONObject weatherObject = (JSONObject) iterator.next();
+                // System.out.println(weatherObject);
+
+                String icon = (String) weatherObject.get("icon");
+                System.out.println("Icon: "+icon);
+
+                String description = (String) weatherObject.get("description");
+                System.out.println("Beschreibung: "+description);
+            }
 
         }
     }
