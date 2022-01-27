@@ -9,13 +9,15 @@ import java.time.format.DateTimeFormatter;
 
 
 public class Ticketautomat {
+    Ticket[] tickets = { new Ticket(1.40f, "Kinder-Ticket"), new Ticket(3.60f, "Erwachsenen-Ticket"),
+    new Ticket(3.20f, "Studenten-Ticket"), new Ticket(5.40f, "Gruppen-Ticket") };
+    JMenuItem[] menuitems = { new JMenuItem("Kinder-Ticket"), new JMenuItem("Erwachsenen-Ticket"),
+    new JMenuItem("Studenten-Ticket"), new JMenuItem("Gruppen-Ticket") };
+    Ticket ticket;
     float bisherGezahlt;
     float bisherEingenommen;
-    Ticket[] tickets = { new Ticket(2.40f, "Kinder-Ticket"), new Ticket(5.20f, "Erwachsenen-Ticket"),
-            new Ticket(4.60f, "Studenten-Ticket"), new Ticket(7.40f, "Gruppen-Ticket") };
-    JMenuItem[] menuitems = { new JMenuItem("Kinder-Ticket"), new JMenuItem("Erwachsenen-Ticket"),
-            new JMenuItem("Studenten-Ticket"), new JMenuItem("Gruppen-Ticket") };
-    Ticket ticket;
+    float bereichKoeff;
+    String bereichString;
     LocalDateTime time;
     DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("dd.MM. HH:mm");
     String formattedtime;
@@ -47,6 +49,9 @@ public class Ticketautomat {
         ButtonGroup BtnGroup = new ButtonGroup();
         JRadioButton[] radioButtons = { new JRadioButton("Kurzstrecke", true), new JRadioButton("Nahbereich", false),
                 new JRadioButton("Hamburg AB", false) };
+
+        bereichKoeff = 1.0f;
+        bereichString = radioButtons[0].getText();
 
         JTextField ticketInput = new JTextField(10);
         TextPrompt ticketInputPlaceholder = new TextPrompt("Münzen einwerfen...", ticketInput);
@@ -102,8 +107,8 @@ public class Ticketautomat {
                 bisherGezahltLabel.setText("Bisher gezahlt: " + bisherGezahlt + "€");
                 bisherEingenommenLabel.setText("Durch Tickets eingenommen: " + bisherEingenommen + "€");
                 if (wechselGeld >= 0) {
-                    String gekauftLabelText = String.format("<html>%s gekauft<hr>Datum: %s<br>Bereich: Hamburg AB<br>Preis: %s€<br>Wechselgeld: %s€</html>",
-                            ticket.ticketName, formattedtime, ticket.ticketPreis, wechselGeld);
+                    String gekauftLabelText = String.format("<html>%s gekauft<hr>Datum: %s<br>Bereich: %s<br>Preis: %s€<br>Wechselgeld: %s€</html>",
+                            ticket.ticketName, formattedtime, bereichString, ticket.ticketPreis * bereichKoeff, wechselGeld);
                     gekauftLabel.setText(gekauftLabelText);
                     gekauftDialog.setLocationRelativeTo(frame);
                     gekauftDialog.setVisible(true);
@@ -157,7 +162,7 @@ public class Ticketautomat {
             menuitems[i].addActionListener(l -> {
                 ticket = tickets[temp];
                 ticketLabel.setText("Ticket: " + ticket.ticketName);
-                ticketPreisLabel.setText("Preis: " + ticket.ticketPreis + "€");
+                ticketPreisLabel.setText("Preis: " + ticket.ticketPreis * bereichKoeff + "€");
             });
         }
 
@@ -170,7 +175,9 @@ public class Ticketautomat {
             radioButtons[i].setBounds(10, 100 + i * 30, 200, 30);
             int temp = i;
             radioButtons[i].addActionListener(l -> {
-                ticketPreisLabel.setText("Preis: " + ticket.ticketPreis*(temp+1) + "€");
+                bereichString = radioButtons[temp].getText();
+                bereichKoeff = temp + 1;
+                ticketPreisLabel.setText("Preis: " + ticket.ticketPreis * bereichKoeff + "€");
             });
         }
         
@@ -260,9 +267,9 @@ public class Ticketautomat {
     // Methode zum Einwerfen von Münzen
     public float GeldEinwerfen(float betrag) {
         bisherGezahlt += betrag;
-        if (bisherGezahlt >= ticket.ticketPreis) {
-            bisherGezahlt -= ticket.ticketPreis;
-            bisherEingenommen += ticket.ticketPreis;
+        if (bisherGezahlt >= ticket.ticketPreis * bereichKoeff) {
+            bisherGezahlt -= ticket.ticketPreis * bereichKoeff;
+            bisherEingenommen += ticket.ticketPreis * bereichKoeff;
             write(bisherEingenommen);
             return GeldZurueckgeben();
         }
