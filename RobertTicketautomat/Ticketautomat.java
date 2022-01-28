@@ -16,8 +16,7 @@ public class Ticketautomat {
     Ticket ticket;
     float bisherGezahlt;
     float bisherEingenommen;
-    float bereichKoeff;
-    String bereichString;
+    public BereichBtnGroup btnGroup;
     LocalDateTime time;
     DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("dd.MM. HH:mm");
     String formattedtime;
@@ -46,12 +45,9 @@ public class Ticketautomat {
         JLabel ticketLabel = new JLabel("Ticket: " + ticket.ticketName);
         JLabel ticketPreisLabel = new JLabel("Preis: " + ticket.ticketPreis + "€");
 
-        ButtonGroup BtnGroup = new ButtonGroup();
+        btnGroup = new BereichBtnGroup();
         JRadioButton[] radioButtons = { new JRadioButton("Kurzstrecke", true), new JRadioButton("Nahbereich", false),
                 new JRadioButton("Hamburg AB", false) };
-
-        bereichKoeff = 1.0f;
-        bereichString = radioButtons[0].getText();
 
         JTextField ticketInput = new JTextField(10);
         TextPrompt ticketInputPlaceholder = new TextPrompt("Münzen einwerfen...", ticketInput);
@@ -108,7 +104,7 @@ public class Ticketautomat {
                 bisherEingenommenLabel.setText("Durch Tickets eingenommen: " + bisherEingenommen + "€");
                 if (wechselGeld >= 0) {
                     String gekauftLabelText = String.format("<html>%s gekauft<hr>Datum: %s<br>Bereich: %s<br>Preis: %s€<br>Wechselgeld: %s€</html>",
-                            ticket.ticketName, formattedtime, bereichString, ticket.ticketPreis * bereichKoeff, wechselGeld);
+                            ticket.ticketName, formattedtime, btnGroup.bereichString, ticket.ticketPreis * btnGroup.bereichKoeffizient, wechselGeld);
                     gekauftLabel.setText(gekauftLabelText);
                     gekauftDialog.setLocationRelativeTo(frame);
                     gekauftDialog.setVisible(true);
@@ -162,7 +158,7 @@ public class Ticketautomat {
             menuitems[i].addActionListener(l -> {
                 ticket = tickets[temp];
                 ticketLabel.setText("Ticket: " + ticket.ticketName);
-                ticketPreisLabel.setText("Preis: " + ticket.ticketPreis * bereichKoeff + "€");
+                ticketPreisLabel.setText("Preis: " + ticket.ticketPreis * btnGroup.bereichKoeffizient + "€");
             });
         }
 
@@ -170,14 +166,14 @@ public class Ticketautomat {
 
         // Fügt die Radiobuttons der ButtonGroup hinzu
         for (int i = 0; i < radioButtons.length; i++) {
-            BtnGroup.add(radioButtons[i]);
+            btnGroup.add(radioButtons[i]);
             container.add(radioButtons[i]);
             radioButtons[i].setBounds(10, 100 + i * 30, 200, 30);
             int temp = i;
             radioButtons[i].addActionListener(l -> {
-                bereichString = radioButtons[temp].getText();
-                bereichKoeff = temp + 1;
-                ticketPreisLabel.setText("Preis: " + ticket.ticketPreis * bereichKoeff + "€");
+                btnGroup.bereichString = radioButtons[temp].getText();
+                btnGroup.bereichKoeffizient = temp + 1;
+                ticketPreisLabel.setText("Preis: " + ticket.ticketPreis * btnGroup.bereichKoeffizient + "€");
             });
         }
         
@@ -267,9 +263,9 @@ public class Ticketautomat {
     // Methode zum Einwerfen von Münzen
     public float GeldEinwerfen(float betrag) {
         bisherGezahlt += betrag;
-        if (bisherGezahlt >= ticket.ticketPreis * bereichKoeff) {
-            bisherGezahlt -= ticket.ticketPreis * bereichKoeff;
-            bisherEingenommen += ticket.ticketPreis * bereichKoeff;
+        if (bisherGezahlt >= ticket.ticketPreis * btnGroup.bereichKoeffizient) {
+            bisherGezahlt -= ticket.ticketPreis * btnGroup.bereichKoeffizient;
+            bisherEingenommen += ticket.ticketPreis * btnGroup.bereichKoeffizient;
             write(bisherEingenommen);
             return GeldZurueckgeben();
         }
