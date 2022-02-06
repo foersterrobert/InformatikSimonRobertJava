@@ -242,6 +242,7 @@ public class Ticketautomat {
                     tickets[i].ticketPreis = Float.parseFloat(settingsTicketInputs[i].getText());
                 }
                 ticketPreisLabel.setText("Preis: " + ticket.ticketPreis + "€");
+                write();
                 settingsDialog.dispose();
             }
             catch (Exception e) {
@@ -266,7 +267,7 @@ public class Ticketautomat {
         if (bisherGezahlt >= ticket.ticketPreis * btnGroup.bereichKoeffizient) {
             bisherGezahlt -= ticket.ticketPreis * btnGroup.bereichKoeffizient;
             bisherEingenommen += ticket.ticketPreis * btnGroup.bereichKoeffizient;
-            write(bisherEingenommen);
+            write();
             return GeldZurueckgeben();
         }
         return -1;
@@ -285,6 +286,11 @@ public class Ticketautomat {
             File eingenommenFile = new File("eingenommen.txt");
             Scanner eingenommenScanner = new Scanner(eingenommenFile);
             String eingenommenText = eingenommenScanner.nextLine();
+            int temp = 0;
+            while (eingenommenScanner.hasNextLine()) {
+                tickets[temp].ticketPreis = Float.parseFloat(eingenommenScanner.nextLine());
+                temp++;
+            }
             float eingenommen = Float.parseFloat(eingenommenText);
             eingenommenScanner.close();
             return eingenommen;
@@ -295,11 +301,14 @@ public class Ticketautomat {
     }
     
     // Speichert die Einnahmnen in der Datei
-    public void write(float eingenommen) {
+    public void write() {
         try {
             File eingenommenFile = new File("eingenommen.txt");
             PrintWriter eingenommenWriter = new PrintWriter(eingenommenFile);
-            eingenommenWriter.println(eingenommen);
+            eingenommenWriter.println(bisherEingenommen);
+            for (int i = 0; i < tickets.length; i++) {
+                eingenommenWriter.println(tickets[i].ticketPreis);
+            }
             eingenommenWriter.close();
         }
         catch (Exception e) {
