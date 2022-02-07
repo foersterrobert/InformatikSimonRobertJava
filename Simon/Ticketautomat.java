@@ -40,7 +40,6 @@ public class Ticketautomat extends JFrame {
     JTextField einwurf = new JTextField(30);
 
     static JLabel gesGeldLabel;
-    static JLabel jlPlaceholder = new JLabel("");
     static JButton jbgeldAuszahlen = new JButton("Geld auszahlen");
     JLabel centEingabe = new JLabel("<html>"
             + "<center><font color=#FFFFFF>Eingabe in Euro</font></center>");
@@ -156,7 +155,6 @@ public class Ticketautomat extends JFrame {
         jp.add(hinzugefuegteTickets[0]);
         jp.add(hinzugefuegteTickets[1]);
         jp.add(gekauft);
-        // jp.add(jlPlaceholder);
         jp.add(jbgeldAuszahlen);
         jp.add(datumAuswaehlen);
 
@@ -237,7 +235,6 @@ public class Ticketautomat extends JFrame {
                 }
 
                 jp.remove(gekauft);
-                // jp.remove(jlPlaceholder);
                 jp.remove(jbgeldAuszahlen);
                 jp.remove(datumAuswaehlen);
 
@@ -245,7 +242,6 @@ public class Ticketautomat extends JFrame {
 
                 jp.add(hinzugefuegteTickets[nummerNeuesTicket]);
                 jp.add(gekauft);
-                // jp.add(jlPlaceholder);
                 jp.add(jbgeldAuszahlen);
                 jp.add(datumAuswaehlen);
 
