@@ -6,7 +6,7 @@ import javax.swing.event.*;
 import javax.swing.text.*;
 
 /*
-Nicht mein Code :) | Nur für Placeholder
+Nicht mein Code :) | Nur eine Hilfsklasse um JTextFields einen Placeholder-Text geben zu können.
 http://www.camick.com/java/source/TextPrompt.java
 */
 

@@ -7,7 +7,6 @@ import javax.swing.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-
 public class Ticketautomat {
     Ticket[] tickets = { new Ticket(1.40f, "Kinder-Ticket"), new Ticket(3.60f, "Erwachsenen-Ticket"),
     new Ticket(3.20f, "Studenten-Ticket"), new Ticket(5.40f, "Gruppen-Ticket") };
@@ -177,6 +176,7 @@ public class Ticketautomat {
             });
         }
         
+        // container: hinzufügen der Komponenten
         container.setLayout(null);
         container.add(title);
         container.add(menuBar);
@@ -189,7 +189,7 @@ public class Ticketautomat {
         container.add(zurueckgebenBtn);
         container.add(settingsBtn);
 
-        // Positionierung der Komponenten im Container
+        // container: Positionierung
         title.setBounds(10, 10, 200, 30);
         menuBar.setBounds(255, 10, 115, 30);
         ticketLabel.setBounds(15, 40, 200, 30);
@@ -201,12 +201,12 @@ public class Ticketautomat {
         zurueckgebenBtn.setBounds(10, 370, 128, 30);
         settingsBtn.setBounds(143, 370, 200, 30);
 
-
         // ActionListener für den gekauft-Button im gekauft-Dialog
         gekauftBtn.addActionListener(l -> {
             gekauftDialog.dispose();
         });
 
+        // gekauft: hinzufügen der Komponenten
         gekauftContainer.setLayout(null);
         gekauftContainer.add(gekauftLabel);
         gekauftContainer.add(gekauftBtn);
@@ -306,8 +306,8 @@ public class Ticketautomat {
             File eingenommenFile = new File("eingenommen.txt");
             PrintWriter eingenommenWriter = new PrintWriter(eingenommenFile);
             eingenommenWriter.println(bisherEingenommen);
-            for (int i = 0; i < tickets.length; i++) {
-                eingenommenWriter.println(tickets[i].ticketPreis);
+            for (Ticket myTicket : tickets) {
+                eingenommenWriter.println(myTicket.ticketPreis);
             }
             eingenommenWriter.close();
         }
