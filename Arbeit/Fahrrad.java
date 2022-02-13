@@ -33,18 +33,18 @@ public class Fahrrad {
     }
 
     public float steuerBerechnung(int steuerSatz) {
-        return (int) preis * steuerSatz;
+        return preis * steuerSatz;
     }
 
     /* Datentypen
         Primitive Datentypen:
             int (ganze Zahlen)
-            short
-            long
-            float
-            double
-            char
-            boolean
+            short (kurzer int)
+            long (langer int)
+            float (Fließkommazahlen)
+            double (längere Floats)
+            char (Schriftzeichen)
+            boolean (True / False)
         erweiterte Datentyp:
             String (Array)
     */
