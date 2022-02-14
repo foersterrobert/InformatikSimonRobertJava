@@ -45,7 +45,7 @@ public class Fahrrad {
             double (längere Floats)
             char (Schriftzeichen)
             boolean (True / False)
-        erweiterte Datentyp:
+        erweiterte Datentypen:
             String (Array)
     */
 }
